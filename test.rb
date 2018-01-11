@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # ruby
 a = 2
 b = "flat white"
