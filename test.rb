@@ -81,6 +81,144 @@ p FALSE.class
 p nil.class
 p NIL.class
 
+
+name = 'James'
+age = 30
+txt = "hello my name is #{name}, and I'm #{age}." # txt is interpreted here, it's not a template
+p txt[18, 6]
+puts txt
+
+txt[0] = "H"
+txt[txt.length - 1] = " years old."
+txt[txt.index(','), 6] = ". \n"
+age = age + 2.4
+p age
+puts txt # age will not be updated in txt as it's been interpred
+
+print "ss".methods
+print "\n"
+
+
+### Variables
+
+iAge = 32 # local variables start with lower case letter or _
+_temp = "/tmp"
+File_Path = "/opt/" # constants start with UPPER case letter
+File_Path = _temp # warning: already initialized constant File_Path
+$Operating_System = "WinNT" # global variables start with $
+@name = "James" # instance variables start with @
+@@gender = "male" # class variables start with @@ (static fields in Java)
+
+p defined? iAge
+p defined?(_temp)
+p defined? (File_Path)
+p defined?($Operating_System)
+p defined?(@name)
+p defined?(@@gender)
+
+# Predefined Global Variables
+puts "current file name is #{$0}"
+puts "invoking arguments are #{$*}"
+puts "current process ID is #{$$}"
+puts "exit status of last executed child process is #{$?}"
+
+# true and false
+p nil ? true : false
+p false ? true : false
+p 0 ? true : false
+p "false" ? true : false
+p " " ? true : false
+p [] ? true : false
+
+# conditional if then else
+if age > 30 then p "old" end
+if age > 40 then p "old" else p "young" end
+if age > 60 then p "too old"
+elsif age > 40 then p "old"
+else p "young"
+end
+
+# use as expression
+p (if age > 30 then "old" end) # parenthesis () must be used here
+
+g = 
+case @@gender
+  when "male" then "men"
+  when "female" then "women"
+  else "alien"
+end 
+
+p g
+
+
+### Range and Loop
+for i in -2..2 do p i end # prints -2, -1, 0, 1, 2
+
+for x in -1..1 do
+  for y in 0..2 do
+    p "(#{x}, #{y})"
+  end
+end
+
+rr = 0..5
+aa = rr.to_a # create array from range
+p rr.class # Range
+p aa.class # Array
+p aa.reverse! # prints [5, 4, 3, 2, 1, 0]
+
+### Array
+mud = [name, age, rr, aa]
+p mud
+p mud.length
+p mud.reverse!
+p mud[-1] # prints value of #{name}
+p mud[0][1]
+p mud.index(32.4)
+p mud[1, 2] # sub array, similar to substring
+
+# modify array
+p mud[2] = 32 # updates and returns the new element
+p mud.insert(2, @@gender) # note the insert method returns the updated array
+p mud.delete_at(mud.length - 1) # deletes and returns the deleted element
+p mud << "temp" # appends and returns the updated array
+p mud.push("TEMP") # same as append
+p mud.pop # removes and returns the last element
+
+aaa = Array.new(3) # creates an array of three nil elements [nil, nil, nil]
+bbb = Array.new(3, 4) # creates an array of three nil elements [4, 4, 4]
+p aaa
+p bbb
+
+ddd = aaa + bbb + aa # join arrays
+p ddd
+
+p aa
+p aa - bbb # difference
+p aa & bbb # intersection
+
+# union. note order matters
+ccc = [3, 4, 5]
+p bbb | ccc # prints [4, 3, 5]
+p ccc | bbb # prints [3, 4, 5]
+
+# unique element
+p ddd.uniq # returns a new array with uniqu elements. original array not modified
+p ddd
+p ddd.uniq! # makes the array uniqu and return it. original array modifided.
+p ddd
+
+ddd.delete_at(0)
+p ddd.sort # sorts and returns a new array with sorted elements
+p ddd
+p ddd.sort! # sorts the original array and returns it
+p ddd
+
+# array comparsison
+aa = [0, 1, 2]
+bb = [0, 1, 2.0]
+cc = [0, 1, "2"]
+
+
 # hash table (dictionary)
 ht = {:james => 30, :russell => 6}
 p ht
