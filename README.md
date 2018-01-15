@@ -1,4 +1,5 @@
 # ruby-basics
 
-Learnt the basics here.
-http://xahlee.info/ruby/ruby_basics.html
+### Resources
+- [Ruby: Learn Ruby in 1 Hour](http://xahlee.info/ruby/ruby_basics.html)
+- [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
