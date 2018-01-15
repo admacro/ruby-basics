@@ -1,0 +1,19 @@
+# coding: utf-8
+# ruby
+
+def palindrome?(sentence)
+  sa = sentence.chars
+  puts sa
+  sa.select! {|c| c != " "}
+  len = sa.len
+  llen = len % 2 == 0 ? len / 2 : (len - 1) / 2
+  (0..llen).to_a.each { |i|
+    if sa[i] != sa[len - i - 1]
+      false
+    end
+    }
+  true
+end
+
+s = "Never odd or even"
+puts palindrome s
