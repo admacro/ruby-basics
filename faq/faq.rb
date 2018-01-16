@@ -96,7 +96,38 @@ downer(s)
 p s # => "hello
 
 
-# * and &
+# *
+def say_hi(word, *names, punc)
+  names.each do |name|
+    p "#{word} #{name}#{punc}"
+  end                
+end
+
+say_hi("Hello", "James", "Russell", "!") # ["James", "Russell"] is passed as an array to names
+
+def say_hi(word, name, punc)
+  p "#{word} #{name}#{punc}"
+end
+
+a = ["Hello", "James", "!!!"]
+say_hi(*a) # * expands a to ["Hello", "James", "!!!"]
 
 
+# &
+def arr_map(a, &f)
+  if !a.nil? && a.respond_to?("each")
+    a.each do |e|
+      #f.call(e)
+      yield(e)
+    end
+  end
+end
+
+arr = [1, 2, 3]
+arr_map(arr) { |x|
+  p x + 1
+}
+
+sqr = proc {|i| p i * i}
+arr_map(arr) &sqr
 
