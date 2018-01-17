@@ -115,13 +115,25 @@ say_hi(*a) # * expands a to three arguments "Hello", "James", "!!!"
 
 # & (ampersand)
 def arr_map(a, &f)
+  p f.nil?
+  
   if !a.nil? && a.respond_to?("each")
-    p f.class # => Proc
-    a.each do |e|
-      # lambda aned proc are both objects of Proc (Procedure)
-      f.call(e) # Proc.call
-      # yield(e) is another way to call f
-    end
+    if block_given? # if there is a block associated with a method
+      p f.class # => Proc
+      a.each do |e|
+        # proc and lambda are both objects of Proc (Procedure)
+        # proc and lambda are effectively synonyms
+        f.call(e)
+        
+        ## alternatives
+        # proc.call(e)
+        # Proc.new.call(e) 
+        # lambda.call(e) # => warning: tried to create Proc object without a block
+        # yield(e)
+      end
+    else
+      p "No block is given"
+    end 
   end
 end
 
@@ -140,7 +152,10 @@ arr_map(arr, &sqr)
 third_p = lambda {|i| p i * i * i}
 arr_map(arr, &third_p)
 
-# multiple arguments
+# no block
+arr_map arr # No block is given
+
+# multiple-argument block
 mp = proc {|x, y| x * x + y * y}
 
 
@@ -148,3 +163,13 @@ mp = proc {|x, y| x * x + y * y}
 A = a = b = "abc"
 b.concat("def")
 p A, a, b
+
+
+# {..} and do..end
+# do..end is passed to arr_map
+# equivalent to arr_map(arr) do..end or arr_map(arr) {..}
+arr_map arr do |x| p x * 10 end
+
+# {..} is passed to arr
+# equivalent to arr_map(arr {..})
+# arr_map arr {|x| p x * 10} # => undefined method `arr' for main:Object (NoMethodError)
