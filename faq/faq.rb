@@ -96,7 +96,7 @@ downer(s)
 p s # => "hello
 
 
-# *
+# * (asterisk)
 def say_hi(word, *names, punc)
   names.each do |name|
     p "#{word} #{name}#{punc}"
@@ -113,21 +113,38 @@ a = ["Hello", "James", "!!!"]
 say_hi(*a) # * expands a to three arguments "Hello", "James", "!!!"
 
 
-# &
+# & (ampersand)
 def arr_map(a, &f)
   if !a.nil? && a.respond_to?("each")
     a.each do |e|
-      #f.call(e)
-      yield(e)
+      # lambda aned proc are both objects of Proc (Procedure)
+      p f.class # => Proc
+      f.call(e) # Proc.call
+      # yield(e) is another way to call f
     end
   end
 end
 
 arr = [1, 2, 3]
+# block ({..} and do..end)
+# con: only one block can be passed to the method
 arr_map(arr) { |x|
   p x + 1
-}
+} # block will be converted to a Proc object and assigned to f
 
-sqr = proc {|i| p i * i}
-arr_map(arr) &sqr
+# proc
+sqr = proc {|i| p i * i} # another way is Proc.new {..}
+arr_map(arr, &sqr)
 
+# lambda
+third_p = lambda {|i| p i * i * i}
+arr_map(arr, &third_p)
+
+# multiple arguments
+mp = proc {|x, y| x * x + y * y}
+
+
+# Variables hold references to objects
+A = a = b = "abc"
+b.concat("def")
+p A, a, b
