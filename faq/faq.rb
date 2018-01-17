@@ -116,9 +116,9 @@ say_hi(*a) # * expands a to three arguments "Hello", "James", "!!!"
 # & (ampersand)
 def arr_map(a, &f)
   if !a.nil? && a.respond_to?("each")
+    p f.class # => Proc
     a.each do |e|
       # lambda aned proc are both objects of Proc (Procedure)
-      p f.class # => Proc
       f.call(e) # Proc.call
       # yield(e) is another way to call f
     end
