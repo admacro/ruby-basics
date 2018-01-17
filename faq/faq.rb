@@ -103,14 +103,14 @@ def say_hi(word, *names, punc)
   end                
 end
 
-say_hi("Hello", "James", "Russell", "!") # ["James", "Russell"] is passed as an array to names
+say_hi("Hello", "James", "Russell", "!") # "James", "Russell" is passed as an array to names
 
 def say_hi(word, name, punc)
   p "#{word} #{name}#{punc}"
 end
 
 a = ["Hello", "James", "!!!"]
-say_hi(*a) # * expands a to ["Hello", "James", "!!!"]
+say_hi(*a) # * expands a to three arguments "Hello", "James", "!!!"
 
 
 # &
