@@ -64,11 +64,11 @@ end
 Demo.new.send(:hello)
 Demo.new.method(:hello).call
 
+
 # loop
 # Although loop looks like a control structure, it is actually a method
 # defined in Kernel. The block which follows introduces a new scope for
 # local variables.
-
 i = 0
 loop do
   i = i + 1
@@ -77,9 +77,69 @@ loop do
 end
 
 
+# emulate do {..} while
+x = 0
+begin
+  p x
+  x += 1
+end until x == 5
 
 
+# methods with = appended
+class Person
+  # attr_accessor :name
+  
+  def name=(name)
+    @name = name
+  end
+
+  def inspect
+    "P(#{@name})"
+  end
+end
+
+pp = Person.new
+pp.name = "James" # this invokes Person#name= method
+
+p pp # => P(James)
 
 
+# \\
+a = '\a'
+aa = '\\a'
+p a # => "\\a"
+p aa  # => "\\a"
+p a.length # => 2
+p aa.length # => 2
+p a == aa # => true
 
+b = "\b"
+bb = "\\b"
+p b # => "\b"
+p bb # => "\\b"
+p b.length # => 1
+p bb.length # => 2
+p b == bb # => false
+
+
+# .. and ...
+p 3..6 # => [3, 4, 5 , 6]
+p 3...6 # => [3, 4, 5] right hand side of the range is excluded
+
+
+# || and or
+p nil || 23 # => 23
+# p(nil or 23) # syntax error, unexpected keyword_or, expecting ')'
+p((nil or 23)) # or has a very low precedence (parse precedence: || > = > or)
+
+foo = nil || 23 # parsed as: foo = (nil || 23)
+p foo # => 23
+
+foo = nil or 23 # parsed as: (foo = nil) or 23
+p foo # => nil
+
+# or is similar to and. They are best used *not* for combining boolean expressions,
+# but for control flow
+p "success" or raise "some error!"
+p nil or raise "some error!" # in `<main>': some error! (RuntimeError)
 
