@@ -141,5 +141,31 @@ p foo # => nil
 # or is similar to and. They are best used *not* for combining boolean expressions,
 # but for control flow
 p "success" or raise "some error!"
-p nil or raise "some error!" # in `<main>': some error! (RuntimeError)
+# p nil or raise "some error!" # => in `<main>': some error! (RuntimeError)
 
+
+# load
+# file extension must be included
+load "./load_p.rb" # => "load_p.rb"
+load "./load_p.rb" # => "load_p.rb"
+
+# require
+# file extension can be ignored
+require "./require_p" # => "require_p.rb"
+require "./require_p.rb" # prints nothing (require loads the file only once)
+
+
+# exception handling
+def read_file
+  p "reading file ..."
+  raise IOError, "File content currupted!"
+end
+begin
+  read_file
+rescue IOError => e
+  p "IO Error", e
+  p $! # the latest exception (here it's the same as e)
+ensure
+  p "Closing file..."
+  p "File closed."
+end
