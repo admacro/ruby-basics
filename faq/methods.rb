@@ -66,3 +66,20 @@ p l.emphasize # => "*i love ruby*"
 
 
 
+# operator overloading
+# supported operators (they are actuallf methods): + - * / < > <=> (needs verification)
+# unsupported operators: =, .., ..., not, ||, &&, and, or, ::
+
+class Virus < String # Virus extends String
+  def +(v) 
+    "#{self}-#{v}"
+  end
+end
+
+v1 = Virus.new("v1")
+v2 = Virus.new("v2")
+v3 = Virus.new("v3")
+p v1 + v2 # => "v1-v2"
+v3 += v2 # Ruby automatically handles +=, -=, etc.
+p v3 # => "v3-v2"
+
