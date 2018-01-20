@@ -15,7 +15,8 @@ end
 
 p1 = Person.new
 p2 = Person.new
-def p2.welcome # p2 welcomes differently (this method is called singleton method)
+# p2 welcomes differently (this method is called singleton method)
+def p2.welcome
   p "Hello!"
 end
 p1.welcome
@@ -82,4 +83,32 @@ v3 = Virus.new("v3")
 p v1 + v2 # => "v1-v2"
 v3 += v2 # Ruby automatically handles +=, -=, etc.
 p v3 # => "v3-v2"
+
+
+# No ++ and --, use += and -=
+x = 1
+x++ # no effect and Ruby doesn't rase an error
+x += 2
+p x
+x -= 1
+p x
+
+
+# self
+p self # => main
+module M
+  p self # => M
+
+  class C
+    p self # => M::C
+
+    def f
+      p self
+    end
+
+  end
+
+  C.new.f # => #<M::C:0x007fc13a077800>
+end
+
 
