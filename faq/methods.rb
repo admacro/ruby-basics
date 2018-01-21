@@ -112,3 +112,28 @@ module M
 end
 
 
+# access object's instance variables
+class Person
+  attr_reader :gender # read only
+  attr_accessor :name # read and write
+  attr_writer :something_weird # write only
+  
+  def initialize(gender)
+    @gender = gender
+  end
+end
+
+p = Person.new("male")
+# p.gender = "female" # undefined method `gender=' for #<Person:0x007f8cde8358e8 @gender="male"> (NoMethodError)
+p p.gender # => male
+
+p p.name # => nil
+p.name = "James"
+p p.name # => "James"
+
+p.something_weird = "unknown feature"
+# p p.something_weird # undefined method `something_weird' for #<Person:0x007ffa7804db00> (NoMethodError)
+
+
+
+
