@@ -93,9 +93,14 @@ p x
 x -= 1
 p x
 
+def hi
+  p "hi"
+end
+p method(:hi).owner # => method hi belongs to Object class
+p self.class # => Object
+self.send("hi") # self is main of Object class
 
-# self
-p self # => main
+# more self
 module M
   p self # => M
 
@@ -105,9 +110,8 @@ module M
     def f
       p self
     end
-
   end
-
+  
   C.new.f # => #<M::C:0x007fc13a077800>
 end
 
@@ -132,8 +136,98 @@ p.name = "James"
 p p.name # => "James"
 
 p.something_weird = "unknown feature"
+# Person#something_weird cannot be called (write only)
 # p p.something_weird # undefined method `something_weird' for #<Person:0x007ffa7804db00> (NoMethodError)
 
 
+# private and protected
+class Test
+  def test
+    p "Test"
+  end
 
+  def tt
+    p "tt"
+  end
+end
+
+Test.new.test
+Test.new.tt
+
+class Test
+  private :test # make test private
+  protected :tt # make tt protected
+end
+
+# Test.new.test # private method `test' called for #<Test:0x000006002892f8> (NoMethodError)
+
+class TT < Test
+  def tt
+    super # calls the same method (tt) in TT's super class (Test)
+  end
+end
+TT.new.tt # => "tt"
+# Test.new.tt # protected method `tt' called for #<Test:0x00000600288c18> (NoMethodError)
+
+
+# method visibility
+# private, protected and public
+# default is public except for intialize method
+class Test
+  public :test # make it public
+end
+Test.new.test # => "Test"
+
+class Utils
+  public # no parameter means all subsequent methods are public
+  def m1
+    "m1"
+  end
+  def m2
+    mm
+  end
+  
+  private_class_method # another way as same as private
+  def mm
+    123
+  end
+end
+
+p Utils.new.m1 # => "m1"
+p Utils.new.m2 # => "m2"
+# p Utils.new.mm # private method `mm' called for #<Utils:0x00000600282bd8> (NoMethodError)
+
+
+# alias
+class Util2 < Utils
+  # both method name and symbol are accepted
+  alias mm1 m1 # alias new_name old_name
+  alias :mm2 :m2 # alias :new_name :old_name
+end
+
+Util2.new.mm1 # => "m1"
+Util2.new.mm2 # => 123
+
+
+# call original method in Kernel
+def puts(s)
+  # puts("Console>>#{s}") # => stack level too deep (SystemStackError)
+
+  # use Kernel.puts
+  Kernel.puts("Console>> #{s}")
+end
+
+puts "logging with puts" # => Console>> logging with puts
+Kernel.puts "logging with puts" # => logging with puts
+
+
+# emulate multiple return values 
+def m1
+  return 1, "2", 3.14
+end
+p m1 # => [1, "2", 3.14] (an array is returned)
+a, b, c = m1 # assign values to each variable arrcordingly
+p a # => 1
+p b # => "2"
+p c # => 3.14
 
