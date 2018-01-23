@@ -2,7 +2,6 @@
 # ruby
 
 # repeated class defition
-# self in class defition
 class Clazz
   @@version = 1.0
   def Clazz.version # class methods
@@ -19,6 +18,7 @@ Clazz.new.beta # => "Beta 1.0"
 # class method cannot be called on instances
 # Clazz.new.version # undefined method `version' for #<Clazz:0x0000060029fd00> (NoMethodError)
 
+# self in class defition
 class Clazz
   @@version = 2.0
   def self.version # overrides former definition of Clazz.version
@@ -52,6 +52,7 @@ class Vars
     "#{self} #{a}"
   end
 end
+
 v = Vars.new("instance var")
 
 # Only class variable start with @@ are identified in instance methods
@@ -66,5 +67,4 @@ puts Vars.inspect # => Vars ["@@class_var", "@class_var", nil, nil]
 # @temp_inst_var is nil until Var#temp is called
 v.temp
 p v # => #<Vars:0x0000060029d140> ["@@class_var", nil, "instance var", "@temp_inst_var"]
-
 
