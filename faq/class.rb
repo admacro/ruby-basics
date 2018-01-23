@@ -68,3 +68,111 @@ puts Vars.inspect # => Vars ["@@class_var", "@class_var", nil, nil]
 v.temp
 p v # => #<Vars:0x0000060029d140> ["@@class_var", nil, "instance var", "@temp_inst_var"]
 
+
+# singleton class
+# singleton methods are methods that live in the singleton class
+class Person
+  def welcome
+    p "hi"
+  end
+end
+p = Person.new
+p.welcome # => "hi"
+
+# optional one
+class << p
+  def welcome
+    p "hello"
+  end
+end
+p.welcome
+
+# optional two (clearer and simpler)
+def p.welcome
+  p "Bonjour"
+end
+p.welcome
+
+
+
+# Module
+module Formatter
+  PATTERN = "XXXYYY"
+  def self.format # just like class methods
+    p PATTERN
+  end
+  def Formatter.format_pretty # same as self.format_pretty
+    p "##{PATTERN}#"
+  end
+end
+
+Formatter::format
+Formatter::format_pretty
+
+# modules cannot generate instances
+# f = Formatter.new # => undefined method `new' for Formatter:Module (NoMethodError)
+
+p Math::PI
+
+# module cannot inherit from anything, nor can be inherited (subclassed)
+# syntax error, unexpected '<'
+# module MyMath < Math 
+# end
+
+
+
+# mixin
+# module can be mixed with a class or another module
+class Animal
+  include Comparable # provides <, <=, ==, >=, >, between?, but no <=> 
+
+  attr_reader :legs
+
+  def initialize(name, legs)
+    @name, @legs = name, legs
+  end
+
+  def <=>(other) # this is used by Comparable to provide its functionalities
+    legs <=> other.legs
+  end
+
+  def inspect
+    @name
+  end
+end
+
+c = Animal.new("cat", 4)
+s = Animal.new("snake", 0)
+p = Animal.new("parrot", 2)
+
+p c < s # => false
+p s < c # => false
+p p >= s # => false
+p p.between?(s, c) # => false
+p ([c, s, p].sort) # => [snake, parrot, cat] (parentheses are required as p is ambiguous)
+
+
+# alternate class method definition
+class CC
+  CT = 1
+  def CC.mm
+    CT # CT can be used directly
+  end
+end
+
+def CC.mmm
+  CC::CT # must use Class::CONST notation
+end
+
+p CC.mm # => 1
+p CC.mmm # => 1
+
+
+# include a module
+include Math
+p sqrt(9) # => 3.0 (notice method receiver is omitted)
+
+# extend a module
+c = CC.new
+c.extend Formatter
+p c.respond_to?("format")
