@@ -173,6 +173,7 @@ include Math
 p sqrt(9) # => 3.0 (notice method receiver is omitted)
 
 # extend a module
+# when x extend a module m, x will have and only have all the instance methods in m, module methods are ignored
 module Formatter
   def format_simple # instance method
     "simple"
@@ -180,8 +181,17 @@ module Formatter
 end
 c = CC.new
 c.extend Formatter
-p c.format_simple # only instance methods are added to the object (object of CC class)
+p c.format_simple # only instance methods are added to this particular object (here the object is an instance of CC class)
 
-CC.extend Formatter
-p CC.format_simple # only instance methods are added to the object (Class object)
+# won't work since this is another object
+# p CC.new.format_simple # undefined method `format_simple' for #<CC:0x000006002886c8> (NoMethodError)
+
+# won't work for module methods 
+# p c.format # private method `format' called for #<CC:0x00000600288880> (NoMethodError)
+
+Person.extend Formatter
+p Person.format_simple # only instance methods are added to the object (here the object is an instance of Class class)
+
+# won't work for instances
+# p Person.new.format_simple # undefined method `format_simple' for #<Person:0x000006002884e8> (NoMethodError)
 
