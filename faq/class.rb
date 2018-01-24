@@ -173,6 +173,15 @@ include Math
 p sqrt(9) # => 3.0 (notice method receiver is omitted)
 
 # extend a module
+module Formatter
+  def format_simple # instance method
+    "simple"
+  end
+end
 c = CC.new
 c.extend Formatter
-p c.respond_to?("format")
+p c.format_simple # only instance methods are added to the object (object of CC class)
+
+CC.extend Formatter
+p CC.format_simple # only instance methods are added to the object (Class object)
+
