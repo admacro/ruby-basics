@@ -52,3 +52,28 @@ p File::SEPARATOR # "/" on Windows
 p ARGV # => ["test"] if run with 'ruby library.rb test'
 p ARGV.class # => Array
 
+
+# file copy, buffered I/O, and flush
+require "fileutils"
+File.open("file.txt", "w").puts "This is a file"
+# content is buffered but not flushed (content hasn't been written to disk yet),
+# so it might be empty. Why it's not flushed? Because File.open without optional
+# block is a synonym for ::new, which only opens the file.
+
+FileUtils.cp("file.txt", "newfile.txt")
+# so newfile.txt might also be empty at this point and
+# nothing will be written to disk when the program terminates
+
+
+# use optional block when open a file
+File.open("afile.txt", "w") { |f| f.puts "This is another file." } # f object will be automatically closed when the block terminates
+
+# now file.txt is closed and has the content
+FileUtils.cp("afile.txt", "anewfile.txt")
+
+
+# $. lineno and ARGF
+p ARGF.class # => ARGF.class
+p ARGF.class.ancestors # => [ARGF.class, Enumerable, Object, Kernel, BasicObject]
+
+p ARGF.file
