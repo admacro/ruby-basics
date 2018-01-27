@@ -18,6 +18,7 @@ end
 
 # file read
 File.open("random.txt", "r+").readlines.each_with_index do |line, i|
+  # r+ => mode (read and write)
   # readlines returns the lines in an array
   line[0, 0] = "#{i + 1}: " # string[start, length]
   p line.class # => String
@@ -76,4 +77,32 @@ FileUtils.cp("afile.txt", "anewfile.txt")
 p ARGF.class # => ARGF.class
 p ARGF.class.ancestors # => [ARGF.class, Enumerable, Object, Kernel, BasicObject]
 
-p ARGF.file
+p ARGF.file # => #<IO:<STDIN>>
+
+
+# use less to display file content
+# open("|less", "w") { |f| f.puts "abc" } # press q to exit less
+
+
+# ensure file is always closed (use block)
+# (1)
+f = File.open("afile.txt")
+begin
+  f.each {|line| print line}
+ensure
+  f.close
+end
+
+# (2)
+File.open("afile.txt") do |f|
+  f.each {|line| print line}
+end
+
+# (3)
+File.foreach("afile.txt") {|line| print line}
+
+# (4)
+File.readlines("afile.txt").each {|line| print line}
+
+
+# 
