@@ -58,7 +58,7 @@ p ARGV.class # => Array
 require "fileutils"
 File.open("file.txt", "w").puts "This is a file"
 # content is buffered but not flushed (content hasn't been written to disk yet),
-# so it might be empty. Why it's not flushed? Because File.open without optional
+# so it might be empty. Why it's not flushed? Because File.open without associated 
 # block is a synonym for ::new, which only opens the file.
 
 FileUtils.cp("file.txt", "newfile.txt")
