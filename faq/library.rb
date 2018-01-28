@@ -106,12 +106,12 @@ File.readlines("afile.txt").each {|line| print line}
 
 
 # file modification time
-p File.mtime("afile.txt")
+p File.mtime("afile.txt") # => 2018-01-28 22:59:14 +0800
 
 # sort files by modification time
 files = Dir.glob("*") # glob is a bash term meaning filename expansion
-p files.class
-p files
+p files.class # => Array
+p files # ["file.txt", "prll_iter.rb", ..., "anewfile.txt", "afile.txt"]
 
 # this approach is inefficient as File.mtime is called on every comparison
 p files.sort {|a, b| File.mtime(b) <=> File.mtime(a) }
@@ -127,10 +127,10 @@ p as # [[2018-01-28 22:28:04 +0800, "anewfile.txt"], ..., [2018-01-16 22:30:22 +
 
 am = as.map(&:last) # map to an array, using the last element of the subarraf as the element (this is called pretzel style in Ruby community)
 
-p am
+p am # ["anewfile.txt", "afile.txt", ..., "persons.txt", "Person.rb"]
 
 amm = as.map {|a| a.last} # this is the general style of as.map(&:last)
-p amm
+p amm # ["anewfile.txt", "afile.txt", ..., "persons.txt", "Person.rb"]
 
 p am == amm # => true
 
