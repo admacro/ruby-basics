@@ -144,4 +144,78 @@ p aa.map(&:first) # => [1, 6, 11]
 p aa.map(&:length) # => [5, 5, 10]
 
 
+# count the frequency of words in a file
+freq = Hash.new(0) # Hash#new(default) 0 will be returned when accessing keys do not exist in the hash
+File.read("words.txt").scan(/\w+/) { |word| freq[word] += 1 }
+freq.keys.sort.each { |word| puts "#{word}: #{freq[word]}" }
+
+# File.read is an implementation from IO
+#   IO.read(file_name) -> string
+# Opens the file, read and reurns the content as a string.
+# read ensures the file is closed before returning.
 #
+# String.scan
+#   str.scan(pattern)                         -> array
+#   str.scan(pattern) {|match, ...| block }   -> str
+#     pattern may contain groups, thus multiple matches are possible in |match, ...|. E.g. a.scan(/(..)(..)/) )
+# scan(/\w+/) {...} returns matches in an array, then passes it to the associate block 
+
+
+# sort strings in alphabetical order
+alp = ('a'..'f').to_a
+p alp # => ["a", "b", "c", "d", "e", "f"]
+p alp.sort {|a,b| b <=> a} # => ["f", "e", "d", "c", "b", "a"]
+
+mixed = alp.each_with_index.map {|a, i| i % 2 == 0 ? a.upcase : a}
+p mixed # => ["A", "b", "C", "d", "E", "f"]
+p mixed.sort {|a,b| b <=> a} # => ["f", "d", "b", "E", "C", "A"]
+p mixed.sort {|a,b| b.upcase <=> a.upcase} # => ["f", "E", "d", "C", "b", "A"] (ignore case distinctions, there is also downcase)
+p mixed.sort {|a,b| b.downcase <=> a.downcase}
+
+
+# nonzero?
+#   Returns self if the value is non-zero, nil otherwise.
+p 1.nonzero? # => 1 
+p 0.nonzero? # => nil
+
+
+# string.sub and string.gsub
+s = "i love ruby!"
+p s.sub(/(\b[a-z])/) { "#{$1.upcase}" } # => "I love ruby!"
+# sub replace only the first occurrence, $1 is back-reference to the pattern group (\b[a-z]) 
+s.gsub!(/(\b[a-z])/) { |match| match.upcase } # global substitution
+p s # => "I Love Ruby!"
+
+t = "u9304yf bp4y0349pg"
+p t.gsub(/([a-z])(\d{4})/) { |match| "#{$1.upcase + $2 + $1.upcase}"} # match is $&
+
+p $& # => string last matched by regexp ("y0349")
+p $~, $~.class # => (#<MatchData "y0349" 1:"y" 2:"0349">) (note the index starts from 1)
+#   the last regexp match of type MatchData with subexpressions (pattern groups) 
+p $1, $~[1] # => $n -> the nth subexpression (pattern group) in the last match (same as $~[n]) ("y")
+p $+, $~[2] # => the last group of the last match (last element of $~). ("0394")
+
+p $` # => $PREMATCH -> The string to the left of the last match ("u9304yf bp4")
+p $' # => $POSTMATCH -> The string to the right of the last match ("pg")
+
+
+# \Z, matches the end of the string (not line)
+# there are also \A which matches the start of the string
+# besides, ^ and $ match the start and end of the line respectively
+zz = "I\nlove\nRuby"
+p zz.sub(/\Z/, '!') # => "I\nlove\nRuby!"
+
+
+# Marshal
+m = File.new("marshal.txt", "r+")
+Marshal.dump(freq, m) # store an object in a file (m must be writable)
+
+m.rewind # go back to the beginning of the file stream
+ff = Marshal.load(m) # load object back (m must be readable)
+p ff
+
+# dump to string (omitting the io parameter)
+ms = Marshal.dump(freq)
+p ms
+ff = Marshal.load(ms)
+p ff
