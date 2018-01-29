@@ -207,7 +207,7 @@ p zz.sub(/\Z/, '!') # => "I\nlove\nRuby!"
 
 
 # Marshal
-m = File.new("marshal.txt", "r+")
+m = File.new("marshal.obj", "r+")
 Marshal.dump(freq, m) # store an object in a file (m must be writable)
 
 m.rewind # go back to the beginning of the file stream
