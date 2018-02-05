@@ -5,3 +5,4 @@
 - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
 - [Official Ruby FAQ](https://www.ruby-lang.org/en/documentation/faq/)
 - [Ruby Koans](http://rubykoans.com/)
+- [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
