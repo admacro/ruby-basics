@@ -76,12 +76,6 @@ class Player
     puts "#{@name} has #{@points} points now."
   end
 
-  def reset(dice_count)
-    @points = 0
-    @dice_count = dice_count
-    puts "#{@name}'s #{@points} points is now cleared."
-  end
-
   def want_to_roll?
     #    return true
     loop do
