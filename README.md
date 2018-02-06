@@ -8,7 +8,7 @@
 
 ### Doing it now ...
 - [Implementing a minimal HTTP server in Ruby](https://practicingruby.com/articles/implementing-an-http-file-server)
-- [Building a Rack Web Server in Ruby](https://ksylvest.com/posts/2016-10-04/building-a-rack-web-server-in-ruby)
 
 ### Roads Ahead
+- [Building a Rack Web Server in Ruby](https://ksylvest.com/posts/2016-10-04/building-a-rack-web-server-in-ruby)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
