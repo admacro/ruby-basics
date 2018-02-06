@@ -104,7 +104,7 @@ class Game
   def start
     loop do # 1
       @players.each do |player|
-        @final = end_game(player)
+        #@final = end_game(player)
         unless player.in_game?
           # not in game yet, try to get in
           get_in_game(player)
@@ -133,13 +133,16 @@ class Game
           end
           player.accumulates(turn_points)
         end
-        
+
+        @final = end_game(player)
         break if @final # exit each 
       end
 
       break if @final # exit loop 1
     end
 
+
+    # add final round
     winner = @players.max {|a, b| a.points <=> b.points }
     puts "Game is over now! The winner is #{winner.name}!"
     puts "@{winner.name} has scored #{winner.points} points!"
