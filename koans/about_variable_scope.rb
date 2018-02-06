@@ -115,4 +115,4 @@ end
 # 
 # What will $anywhere be down here, outside of the scope of the
 # AboutVariableScope class?
-p $anywhere # => "Anywhere"
+# p $anywhere # => "Anywhere"
