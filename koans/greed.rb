@@ -1,11 +1,6 @@
 # EXTRA CREDIT:
 #
-# Create a program that will play the Greed Game.
 # Rules for the game are in GREED_RULES.TXT.
-#
-# You already have a DiceSet class and score function you can use.
-# Write a player class and a Game class to complete the project.  This
-# is a free form assignment, so approach it however you desire.
 
 def score(dice)
   p = 0 # total points
@@ -33,7 +28,7 @@ def score(dice)
       end
     end
   }
-  [p, np]
+  {points: p, non_scoring_dice_count: np}
 end
 
 
@@ -63,8 +58,9 @@ class Player
     size = args.size > 0 ? args[0] : @dice_count
     ds = DiceSet.new.roll(size)
     s = score(ds)
-    puts "#{@name} rolled #{ds}, scored #{s[0]} points."
-    args.size > 0 ? s[0] : s
+    points = s[:points]
+    puts "#{@name} rolled #{ds}, scored #{points} points."
+    args.size > 0 ? points : s
   end
   
   def in_game?
@@ -77,7 +73,6 @@ class Player
   end
 
   def want_to_roll?
-    #    return true
     loop do
       print "#{@name}, you have #{@dice_count} dice. Do you want to roll? (y/n) : "
       a = gets.chomp.downcase
@@ -90,82 +85,124 @@ class Player
 end
 
 
-class Game
+class Greed
   Dice_Count = 5
+  Final_Threshold = 3000
+  In_Game_Threshold = 300
+  
   attr_accessor :players, :final
 
-  def initialize(player_names)
-    puts "Greed game starts now!"
-    @players = player_names.split(",").map { |name|
-      Player.new(name, Dice_Count)
+  def initialize
+    graceful_exit
+    welcome
+  end
+
+  def welcome
+    puts "\n>>>>>>>>>> Welcome to Greed! <<<<<<<<<<"
+    names = []
+    loop do
+      puts "Enter players' names, separate by comma. (Minimum 2 players)"
+      names = gets.chomp.split(',')
+      break if names.size >= 2
+    end
+    @players = names.map { |name|
+      Player.new(name.strip, Dice_Count)
     }
   end
   
   def start
-    loop do # 1
+    puts "\n>>>>>>>>>> Game starts now! <<<<<<<<<<"
+    
+    until @final
+
       @players.each do |player|
-        #@final = end_game(player)
+        puts "\n>>>>>>> #{player.name}'s turn <<<<<<<"
         unless player.in_game?
-          # not in game yet, try to get in
-          get_in_game(player)
-        else
-          # in game
-          turn_points = 0
-          loop do # 2
-            if player.want_to_roll?
-              s = player.roll
-              if s[0] > 0
-                turn_points += s[0]
-                if s[1] > 0 && player.dice_count == Dice_Count
-                  player.dice_count = s[1]
-                end
-                if s[1] == 0 && player.dice_count < Dice_Count
-                  player.dice_count = Dice_Count
-                end
-                break if @final # exit loop 2
-              else
-                turn_points = 0
-                break
-              end
-            else
-              break # exit loop 2
-            end
-          end
+          get_in_game(player) # not in game yet, try to get in
+        else # in game
+          turn_points = play_turn(player)
           player.accumulates(turn_points)
         end
 
-        @final = end_game(player)
+        @final = finalize_game(player)
         break if @final # exit each 
       end
 
-      break if @final # exit loop 1
     end
 
+    # final round, each remaining player has one more chance to roll 
+    remaining_players = @players.select {|p| p != @winner}
+    remaining_players.each {|p| p.accumulates(p.roll[:points])}
 
-    # add final round
-    winner = @players.max {|a, b| a.points <=> b.points }
-    puts "Game is over now! The winner is #{winner.name}!"
-    puts "@{winner.name} has scored #{winner.points} points!"
-    puts "Congratulations, #{winner.name}!"
+    # end game and show score board
+    end_game
   end
 
   def get_in_game(player)
-    puts "#{player.name} is trying to get into the game."
+    puts "\n>>> #{player.name} is trying to get into the game."
     p = player.roll(Dice_Count)
-    if p >= 300
+    if p >= In_Game_Threshold
       player.in_game = true
       player.accumulates(p)
+      puts "\n>>> ALERT <<<"
       puts "#{player.name} is in the game now."
+    else
+      puts "#{player.name} failed to get in the game."
     end
   end
 
-  def end_game(player)
-    @final = (player.points >= 3000)
-    puts "#{player.name} has reached 3000 points. Final round starts now." if @final
+  def play_turn(player)
+    turn_points = 0
+    while player.want_to_roll? 
+      s = player.roll
+      points = s[:points]
+      nsdc = s[:non_scoring_dice_count]
+      if points > 0
+        turn_points += s[:points]
+        if nsdc > 0 && player.dice_count == Dice_Count
+          player.dice_count = nsdc
+        end
+        if nsdc == 0 && player.dice_count < Dice_Count
+          player.dice_count = Dice_Count
+        end
+      else
+        puts "#{player.name}, you lost this turn and #{turn_points} points."
+        turn_points = 0
+        break
+      end
+    end
+    puts "#{player.name}, you scored #{turn_points} for this turn."
+    turn_points
+  end
+
+  def finalize_game(player)
+    @final = (player.points >= Final_Threshold)
+    if @final
+      @winner = player
+      puts "\n>>>>>>> WARNING <<<<<<<"
+      puts "#{player.name} has reached #{Final_Threshold} points. Final round starts now."
+    end
     @final
   end
+
+  def end_game
+    @winner = @players.max {|a, b| a.points <=> b.points }
+    puts "\n>>>>>>>>>> Game Over <<<<<<<<<<"
+    puts "The winner is #{@winner.name}!"
+    puts "#{@winner.name} has scored #{@winner.points} points!"
+    puts "Congratulations, #{@winner.name}!"
+    puts "Thank You! Goodbye!"
+    puts ">>>>>>>>>> Game Over <<<<<<<<<<\n"
+  end
   
+  # respond to Ctrl-C
+  def graceful_exit
+    Signal.trap("INT") {
+      puts "\nExiting Greed game..."
+      exit
+    }
+  end
 
 end
 
-Game.new("James,Russell,Tom").start
+Greed.new.start
