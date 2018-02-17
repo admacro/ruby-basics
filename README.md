@@ -5,10 +5,10 @@
 - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
 - [Official Ruby FAQ](https://www.ruby-lang.org/en/documentation/faq/)
 - [Ruby Koans](http://rubykoans.com/) with extra credit [Farkle](https://en.wikipedia.org/wiki/Farkle)
-
-### Doing it now ...
 - [Implementing a minimal HTTP server in Ruby](https://practicingruby.com/articles/implementing-an-http-file-server)
 
-### Roads Ahead
+### Doing it now ...
 - [Building a Rack Web Server in Ruby](https://ksylvest.com/posts/2016-10-04/building-a-rack-web-server-in-ruby)
+
+### Roads Ahead
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
