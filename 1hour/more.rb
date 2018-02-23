@@ -31,6 +31,7 @@ Compose your "opus" here.
 
     #{name}
 ABC123
+# Note the terminating sequence(ABC123) +must+ be at the very beginning of the line
 
 # Use double quote for any character sequence
 dd = <<"!@#$%^&*(){}"
@@ -42,12 +43,26 @@ by #{name}
 
 puts dd
 
-# No interpolating
+# Double quote or no quoting interpolates the string
+# No interpolating when quoted with single quote
 puts <<'NOT_INTERPOLATED'
 #{name} is not evaluated.
 Ooops!
 NOT_INTERPOLATED
 
+# <<- and <<~
+puts <<-leading
+     This line is indented with one tab.
+          This is indented with two tabs.
+leading
+
+# each line is stripped n number of spaces while n is the minimum of
+# leading whitespace of all lines (the least indented line)
+puts <<~NoLeading
+    Leading whitespace are stripped (4 spaces)
+        This line is indented with 8 spaces (4 spaces are stripped)
+          This is indented with 10 spaces (4 spaces are stripped)
+NoLeading
 
 ### String operation
 puts "I love Ruby!\n" * 3
