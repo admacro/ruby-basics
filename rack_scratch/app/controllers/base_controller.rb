@@ -9,21 +9,47 @@ class BaseController
   end
 
   def index
-    # <<~ is called the squiggly heredoc (since Ruby v2.3).
-    # Unlike <<-, it strips the leading whitespace.
-    # Tip: ~ is called tilde in English.
-    build_response <<~HTML
-      <html>
-        <head><title>A Rack Demo</title></head>
-        <body>
-          <h1>This is the root page</h1>
-          <p>Hello from Base controller!</p>
-        </body>
-      </html>
-    HTML
+    @title = "Welcome to my zoo!"
+    build_response render_template
   end
 
   private
+
+  def render_template(name = params[:action])
+    templates_dir = self.class.name.downcase.sub("controller", "")
+    template_file = File.join(templates_dir, "#{name}.html.erb")
+    file_path = template_file_path_for template_file
+    
+    if File.exists? file_path
+      puts "Rendering template file #{template_file}"
+      render_file file_path
+    else
+      "ERROR: template file not found #{template_file}"
+    end
+  end
+
+  def render_partial(template_file)
+    file_path = template_file_path_for template_file
+    
+    if File.exists? file_path
+      puts "Rendering partial file #{template_file}"
+      render_file file_path
+    else
+      "ERROR: partial file not found #{template_file}"
+    end
+  end
+
+  def template_file_path_for(template_file)
+    File.expand_path(File.join("../../views", template_file), __FILE__)
+  end
+
+  def render_file(file_path)
+    erb_file = File.read(file_path)
+    
+    # binding is a method of Ruby core which returns the current 
+    # Binding object as the evaluation context
+    ERB.new(erb_file).result(binding)
+  end
   
   def build_response(body, status: 200)
     [status, {"Content-Type" => "text/html"}, [body]]
