@@ -9,18 +9,14 @@ class DogsController < BaseController
   # GET /dogs
   def index
     @title = "So many dogs"
-    @dogs = (1..5).map do |i|
-      OpenStruct.new(id: i, name: "Dog-#{i}")
-    end
+    @dogs = Dog.all
     build_response render_template
   end
 
-  # GET /dogs/:id?name=optional_custom_name
+  # GET /dogs/:id
   def show
-    id = params[:id]
-    dog_name = params["name"] || "Dog-#{id}"
-    @title = "#{dog_name}'s page"
-    @dog = OpenStruct.new(id: id, name: dog_name)
+    @dog = Dog.find(params[:id])
+    @title = "#{@dog}'s page"
     build_response render_template
   end
 
@@ -38,7 +34,9 @@ class DogsController < BaseController
   # Switching to a different server, for example puma or thin, will work.
   # Ref: https://github.com/rack/rack/wiki/(tutorial)-rackup-howto
   def create
-    redirect_to "/dogs"
+    dog = Dog.new(name: params['dog']['name'])
+    dog.save
+    redirect_to "/dogs/#{dog.id}"
   end
 
 end

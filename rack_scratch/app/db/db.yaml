@@ -1,0 +1,10 @@
+---
+Dog_1: !ruby/object:Dog
+  id: 1
+  name: ooueue
+Dog_2: !ruby/object:Dog
+  id: 2
+  name: 123e..,,oeu
+Dog_3: !ruby/object:Dog
+  id: 3
+  name: Bulldog
