@@ -16,6 +16,9 @@
   - [Part 4: Models and Persistence](http://tommaso.pavese.me/2016/10/09/a-rack-application-from-scratch-part-4-models-and-persistence/)
 
 ### Doing it now ...
+- Ruby on Rails Guides
+  - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
 
 ### Roads Ahead
+- [Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
