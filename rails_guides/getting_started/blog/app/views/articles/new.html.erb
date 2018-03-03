@@ -1,0 +1,26 @@
+<h1>New Article</h1>
+
+<!--
+     form_with is a helper method for form creating.
+     |form| is a FormBuilder object.
+     local: true => Ajax disabled (default is using Ajax to submit form)
+     articles_path is a helper method for finding the correct URI (the
+     one with "articles" prefix and "POST" Verb, check `bin/rails routes` 
+     for details)
+-->
+<%= form_with scope: :article, url: articles_path, local: true do |form| %>
+
+    <p>
+	<%= form.label :title %><br>
+	<%= form.text_field :title %>
+    </p>
+    <p>
+	<%= form.label :text %><br>
+	<%= form.text_area :text %>
+    </p>
+
+    <p>
+	<%= form.submit %>
+    </p>
+    
+<% end %>
