@@ -1,14 +1,42 @@
 <h1>New Article</h1>
 
-<!--
-     form_with is a helper method for form creating.
-     |form| is a FormBuilder object.
-     local: true => Ajax disabled (default is using Ajax to submit form)
-     articles_path is a helper method for finding the correct URI (the
-     one with "articles" prefix and "POST" Verb, check `bin/rails routes` 
-     for details)
--->
+
+<%#
+if a field contains an error, Rails will wrap a div with class  
+field_with_errors around the input field.
+%>
+<style>
+ .field_with_errors > input {
+     background-color: lightcoral
+ }
+</style>
+
+<%# 
+form_with is a helper method for form creating.
+|form| is a FormBuilder object.
+local: true => Ajax disabled (default is using Ajax to submit form)
+articles_path is a helper method for finding the correct URI (the
+one with "articles" prefix and "POST" Verb, check `bin/rails routes` 
+for details)
+%>
 <%= form_with scope: :article, url: articles_path, local: true do |form| %>
+
+    <%# %>
+    <% if @article.errors.any? %>
+	<div id="error_explaination">
+	    <h2>
+		<%# ActionView::Helpers::TextHelper.pluralize %>
+		<%= pluralize(@article.errors.count, "error") %> prohibited this
+		article from being saved:
+	    </h2>
+	    <ul>
+		<%# errors.full_messages gets us a list of all errors %>
+		<% @article.errors.full_messages.each do |msg| %>
+		    <li><%= msg %></li>
+		<% end %>
+	    </ul>
+	</div>
+    <% end %>
 
     <p>
 	<%= form.label :title %><br>
@@ -24,3 +52,5 @@
     </p>
     
 <% end %>
+
+<%= link_to 'Back', articles_path%>
