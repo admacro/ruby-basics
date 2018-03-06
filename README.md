@@ -14,11 +14,13 @@
   - [Part 2: Routes and Controllers](http://tommaso.pavese.me/2016/07/26/a-rack-application-from-scratch-part-2-routes-and-controllers//)
   - [Part 3: View templates](http://tommaso.pavese.me/2016/08/01/a-rack-application-from-scratch-part-3-view-templates/)
   - [Part 4: Models and Persistence](http://tommaso.pavese.me/2016/10/09/a-rack-application-from-scratch-part-4-models-and-persistence/)
-
-### Doing it now ...
 - Ruby on Rails Guides
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
 
+### Doing it now ...
+- Ruby on Rails Guides
+  - [Active Record Basics](http://edgeguides.rubyonrails.org/active_record_basics.html)
+
 ### Roads Ahead
-- [Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html)
+- [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
