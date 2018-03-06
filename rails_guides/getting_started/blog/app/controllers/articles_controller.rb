@@ -2,6 +2,9 @@
 # ruby
 
 class ArticlesController < ApplicationController
+  # block access to every action except index and show
+  http_basic_authenticate_with name: "james", password: "123", except: [:index, :show]
+  
   def index
     @articles = Article.all
   end
@@ -53,7 +56,11 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
-    @article.comments.destroy_all # delete associated comments
+    
+    # @article.comments.destroy_all # delete associated comments
+    # add `dependent: :destroy` to has_many call in Article model will 
+    # make Rails destroy the associated comments automatically
+
     @article.destroy # you can also use delete
     
     redirect_to articles_path

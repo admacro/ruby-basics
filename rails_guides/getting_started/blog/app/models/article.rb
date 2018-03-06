@@ -4,7 +4,7 @@
 class Article < ApplicationRecord
   # ApplicationRecord inherits from ActiveRecord::Base
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   
   # things to validate before saving to DB
   #
