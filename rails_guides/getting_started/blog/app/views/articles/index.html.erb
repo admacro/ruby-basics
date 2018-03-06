@@ -5,6 +5,7 @@
     <tr>
 	<th>Title</th>
 	<th>Text</th>
+	<th colspan="3">Action</th>
     </tr>
 
     <% @articles.each do |article| %>
@@ -12,6 +13,15 @@
 	    <td><%= article.title %></td>
 	    <td><%= article.text %></td>
 	    <td><%= link_to 'Show', article_path(article) %></td>
-	</tr>	
+	    <td><%= link_to 'Edit', edit_article_path(article) %></td>
+	    <td><%= link_to 'Destroy', article_path(article),
+		method: :delete, # this is the HTTP DELETE method (REST style)
+		data: { confirm: 'Are you sure?' } # show a confirm dialog
+		# this is done via rails-ujs included in the application's
+		    # layout file (app/views/layouts/application.html.erb)
+		    # the u in ujs means Unobtrusive (not easily noticeable)
+		%>
+	    </td>
+	</tr>
     <% end %>
 </table>

@@ -9,6 +9,10 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find(params[:id])
   end
+
+  def edit
+    @article = Article.find(params[:id])
+  end
   
   def new
     @article = Article.new
@@ -32,6 +36,27 @@ class ArticlesController < ApplicationController
     else
       render 'new' # request forwarding, @article is passed to `new` template
     end
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      # passing all the attributes to update is not necessary, you can use 
+      # @article.update(title: 'A new title') to only update the title
+      # Note: update method accepts hash
+      redirect_to @article
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.comments.destroy_all # delete associated comments
+    @article.destroy # you can also use delete
+    
+    redirect_to articles_path
   end
 
   private

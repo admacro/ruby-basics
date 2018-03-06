@@ -4,6 +4,8 @@
 class Article < ApplicationRecord
   # ApplicationRecord inherits from ActiveRecord::Base
 
+  has_many :comments
+  
   # things to validate before saving to DB
   #
   # if validation fails, expect the following output in server console
@@ -14,5 +16,5 @@ class Article < ApplicationRecord
   #   Title can't be blank
   #   Title is too short (minimum is 5 characters)
   validates :title, presence: true, length: { minimum: 5 }
-
+  
 end

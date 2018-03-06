@@ -1,0 +1,65 @@
+<%#
+if a field contains an error, Rails will wrap a div with class  
+field_with_errors around the input field.
+%>
+<style>
+ .field_with_errors > input {
+     background-color: lightcoral
+ }
+</style>
+
+<%= form_with(model: @article, local: true) do |form| %>
+    <%#
+    form_with is a helper method for form creating.
+    |form| is a FormBuilder object.
+    local: true => Ajax disabled (default is using Ajax to submit form)
+
+    For new record, this is equivalent to something like this:
+      form_with(scope: :article, url: articles_path, local: true)
+    articles_path is a helper method for finding the correct URI (the one with 
+    "articles" prefix and "POST" Verb, check `bin/rails routes` for details)
+
+    For editing a record, this is equivalent to:
+      form_with(scope: :article, url: articles_path, method: :patch, local: true)
+    
+    Passing the article object to form_with method will automatically create
+    url for submitting the edited article form and will cause the helper to
+    fill in the form with the fields of the object. This is different with
+    passing in a symbol scope (scope: :article) which just creates the fields
+    but without anything filled into them.
+
+    This will aslo tell Rails to submit the form via the +PATCH+ HTTP method
+    which is the HTTP method we are expected to update resources according to
+    the REST protocol.
+    %>
+
+    <% if @article.errors.any? %>
+	<div id="error_explaination">
+	    <h2>
+		<%# ActionView::Helpers::TextHelper.pluralize %>
+		<%= pluralize(@article.errors.count, "error") %> prohibited this
+		article from being saved:
+	    </h2>
+	    <ul>
+		<%# errors.full_messages gets us a list of all errors %>
+		<% @article.errors.full_messages.each do |msg| %>
+		    <li><%= msg %></li>
+		<% end %>
+	    </ul>
+	</div>
+    <% end %>
+
+    <p>
+	<%= form.label :title %><br>
+	<%= form.text_field :title %>
+    </p>
+    <p>
+	<%= form.label :text %><br>
+	<%= form.text_area :text %>
+    </p>
+
+    <p>
+	<%= form.submit %>
+    </p>
+    
+<% end %>
