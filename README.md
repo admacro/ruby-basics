@@ -20,6 +20,7 @@
 
 ### Doing it now ...
 - Ruby on Rails Guides
+  - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   - [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
 
 ### Roads Ahead
