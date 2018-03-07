@@ -16,11 +16,12 @@
   - [Part 4: Models and Persistence](http://tommaso.pavese.me/2016/10/09/a-rack-application-from-scratch-part-4-models-and-persistence/)
 - Ruby on Rails Guides
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
+  - [Active Record Basics](http://edgeguides.rubyonrails.org/active_record_basics.html)
 
 ### Doing it now ...
 - Ruby on Rails Guides
-  - [Active Record Basics](http://edgeguides.rubyonrails.org/active_record_basics.html)
+  - [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
 
 ### Roads Ahead
-- [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
+- [Active Record Validations](http://edgeguides.rubyonrails.org/active_record_validations.html)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)

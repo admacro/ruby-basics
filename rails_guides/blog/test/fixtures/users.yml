@@ -1,0 +1,20 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Tom
+  age: 40
+  occupation: Driver
+
+two:
+  name: Jin Bao
+  age: 27
+  occupation: Ploiceman
+
+# YAML fixture format is pre-processed with ERB when Rails leads fixtures.
+# the following code generates 3 users.
+<% 3.times do |n| %>
+user_<%= n %>:
+  name: <%= "user#{n}" %>
+  age: <%= "#{20 + n}" %>
+  occupation: <%= "Student" %>
+<% end %>
