@@ -8,7 +8,7 @@ one:
 two:
   name: Jin Bao
   age: 27
-  occupation: Ploiceman
+  occupation: Policeman
 
 # YAML fixture format is pre-processed with ERB when Rails reads fixtures.
 # the following code generates 3 users.
