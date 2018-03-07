@@ -10,7 +10,7 @@ two:
   age: 27
   occupation: Ploiceman
 
-# YAML fixture format is pre-processed with ERB when Rails leads fixtures.
+# YAML fixture format is pre-processed with ERB when Rails reads fixtures.
 # the following code generates 3 users.
 <% 3.times do |n| %>
 user_<%= n %>:
