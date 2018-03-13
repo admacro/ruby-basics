@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309102358) do
+ActiveRecord::Schema.define(version: 20180309091303) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -59,12 +59,6 @@ ActiveRecord::Schema.define(version: 20180309102358) do
     t.string "brand"
     t.index ["name"], name: "index_products_on_name"
     t.index ["user_id"], name: "index_products_on_user_id"
-  end
-
-  create_table "test_foreign_keys", force: :cascade do |t|
-    t.string "name"
-    t.integer "author_id"
-    t.index ["author_id"], name: "index_test_foreign_keys_on_author_id"
   end
 
   create_table "trains", force: :cascade do |t|
