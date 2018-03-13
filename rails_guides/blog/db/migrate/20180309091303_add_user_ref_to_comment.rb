@@ -8,7 +8,9 @@
 # This is currently my assumption. Need to dig deeper to confirm the issue.
 #
 # Update:
-# Issue confirmed, but only with sqlite3 database. Tried with MySql without
+# Issue confirmed, the first part of my consumption is right, which is you can
+# only add foreign key to a table when you create the table. The second part 
+# is also right, but only with sqlite3 database. Tried with MySql without
 # any problem. So, this depends on the database. See this thread for more information:
 # https://stackoverflow.com/questions/1884818/how-do-i-add-a-foreign-key-to-an-existing-sqlite-table
 #
