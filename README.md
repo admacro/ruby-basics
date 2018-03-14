@@ -25,5 +25,5 @@
 
 ### Roads Ahead
 - [Active Record Validations](http://edgeguides.rubyonrails.org/active_record_validations.html)
-- [Ruby on Rails Tutorial (online book)](https://www.railstutorial.org/book)
+- [Ruby Metaprogramming](http://ruby-metaprogramming.rubylearning.com/)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
