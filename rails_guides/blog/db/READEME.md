@@ -11,6 +11,6 @@ So it looks like this using open interval symbol:
 `(VERSION_111 ... current_version ... VERSION_123]`
 
 ### db Commands
-`db:create` creates the database for the current RAILS_ENV environment. If not specified, it defaults to development and test.
-`db:setup` runs `db:create`, `db:schema:load` and `db:seed`
-`db:reset` runs `db:drop` and `db:setup`
+- `db:create` creates the database for the current RAILS_ENV environment. If not specified, it defaults to development and test.
+- `db:setup` runs `db:create`, `db:schema:load` and `db:seed`
+- `db:reset` runs `db:drop` and `db:setup`
