@@ -19,7 +19,7 @@
   - [Active Record Basics](http://edgeguides.rubyonrails.org/active_record_basics.html)
 
 ### Doing it now ...
-- [Ruby Metaprogramming](http://ruby-metaprogramming.rubylearning.com/)
+- [Metaprogramming Ruby 2](https://pragprog.com/book/ppmetr2/metaprogramming-ruby-2)
 - Ruby on Rails Guides
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   - [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
