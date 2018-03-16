@@ -31,4 +31,4 @@ Rails stores migration metadata in `schema_migrations` and `ar_internal_metadata
   - are not designed to be edited
   - can be useful for model attributes lookup
 - The Active Record way claims that **intelligence resides in your models, not in your database**. As such, features such as triggers or constraints, which push some of that intelligence back into the database, are not heavily used. So, use standard database features as possible as you can if you foresee the possibility of switching to another db in the future.
-- Use `seeds.rb` database data initialization
+- Use `seeds.rb` for database data initialization
