@@ -17,7 +17,7 @@ Rails stores migration metadata in `schema_migrations` and `ar_internal_metadata
 - `db:setup` runs `db:create`, `db:schema:load` and `db:seed`
 - `db:reset` runs `db:drop` and `db:setup`
 
-[See this well summarized page for detials] (https://jacopretorius.net/2014/02/all-rails-db-rake-tasks-and-what-they-do.html)
+[See this well summarized page for detials](https://jacopretorius.net/2014/02/all-rails-db-rake-tasks-and-what-they-do.html)
 
 ### Practices
 - When starting from stratch, use generators, aka `rails g model Xxx ...` or `rails g migration CreateXxx ...`.
