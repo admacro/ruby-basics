@@ -19,11 +19,11 @@
   - [Active Record Basics](http://edgeguides.rubyonrails.org/active_record_basics.html)
 
 ### Doing it now ...
+- [Ruby Metaprogramming](http://ruby-metaprogramming.rubylearning.com/)
 - Ruby on Rails Guides
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   - [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
 
 ### Roads Ahead
 - [Active Record Validations](http://edgeguides.rubyonrails.org/active_record_validations.html)
-- [Ruby Metaprogramming](http://ruby-metaprogramming.rubylearning.com/)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
