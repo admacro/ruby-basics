@@ -14,7 +14,7 @@ class User < ApplicationRecord
   # use :message to customize the error message, default is "must be accepted"
   validates :eula, acceptance: { accept: [true, 'TRUE', 'Yes', 'accepted', 'yes'], message: 'must be abided'}
 
-  validates :email, confirmation: true
+  validates :email, confirmation: true, format: {with: /[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+/, message: "email format is not valid"}
 
   # this is for validation only, no column is needed for this.
   # naming convention is Xxx_confirmation

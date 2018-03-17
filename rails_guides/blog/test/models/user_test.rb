@@ -2,15 +2,19 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
+  def new_user_attr
+    {
+     :name => "James",
+     :age => 33,
+     :occupation => "Code Artist",
+     :eula => true,
+     :email => "james@admacro.xyz",
+     :email_confirmation => "james@admacro.xyz"
+    }
+  end
+
   def new_user
-    user = User.new
-    user.name = "James"
-    user.age = 33
-    user.occupation = "Code Artist"
-    user.eula = true
-    user.email = "james@admacro.xyz"
-    user.email_confirmation = "james@admacro.xyz"
-    user
+    User.new(new_user_attr)
   end
   
   test "should not save" do
@@ -87,7 +91,7 @@ class UserTest < ActiveSupport::TestCase
   
   test "should be valid" do
     # create method will call validation before saving the object to DB
-    valid = User.create(new_user).valid?
+    valid = User.create(new_user_attr).valid?
     assert valid
   end
 
@@ -98,7 +102,7 @@ class UserTest < ActiveSupport::TestCase
   
   test "should not have any error before validation" do
     # new method will not call save therefore won't validate the object
-    user = User.new
+    user = new_user
     assert_empty user.errors
     assert_empty user.errors.messages
   end
@@ -108,14 +112,14 @@ class UserTest < ActiveSupport::TestCase
     user.valid? # you need to call valid? explicitly to validate the object
     assert_not_empty user.errors
     assert_not_empty user.errors.messages
-    p user.errors.messages # => {:name=>["can't be blank"]}
+    puts user.errors.messages # all error messages for object user
   end
 
   test "should return error message for name attribute" do
     user = User.new
     user.valid?
     assert_not_empty user.errors[:name]
-    p user.errors[:name]
+    puts "attribute error: #{user.errors[:name]}"
   end
 
   test "should return details of the validator of the invalid attribute" do
@@ -123,7 +127,7 @@ class UserTest < ActiveSupport::TestCase
     user.valid?
     validators = user.errors.details[:name]
     assert_not_empty validators
-    p validators # => [{:error=>:blank}]
+    puts "error details: #{validators}" # => [{:error=>:blank}]
   end
 
 
@@ -143,7 +147,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not valid
     assert_not_empty user.errors.messages
     assert_equal 1, user.errors.size
-    p user.errors.messages # {:eula=>["must be abided"]}
+    puts  "acceptance errors: #{user.errors.messages}" # {:eula=>["must be abided"]}
   end
 
   test "should pass all acceptance validations" do
@@ -173,7 +177,7 @@ class UserTest < ActiveSupport::TestCase
     user.email_confirmation = "james@admacro.com"
     valid = user.valid?
     assert_not valid
-    p user.errors.messages # => {:email_confirmation=>["doesn't match Email"]}
+    puts "confirmation errors: #{user.errors.messages}" # => {:email_confirmation=>["doesn't match Email"]}
   end
 
   test "should be valid when email and confirmation are identical" do
@@ -182,4 +186,16 @@ class UserTest < ActiveSupport::TestCase
     assert valid
   end
 
+  # format (regexp)
+  test "should not save if email format is invalid" do
+    user = new_user
+    email = "invalid@email_address"
+    user.email = email
+    user.email_confirmation = email
+    valid = user.valid?
+    messages = user.errors.messages
+    assert_not valid
+    assert_not_empty messages
+    puts "format errors: #{messages}"
+  end
 end
