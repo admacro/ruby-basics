@@ -4,7 +4,8 @@
 class Article < ApplicationRecord
   # ApplicationRecord inherits from ActiveRecord::Base
 
-  has_many :comments, dependent: :destroy
+  # inverse_of: :article is required for validation of associated comments
+  has_many :comments, dependent: :destroy, inverse_of: :article
   
   # things to validate before saving to DB
   #
@@ -16,5 +17,6 @@ class Article < ApplicationRecord
   #   Title can't be blank
   #   Title is too short (minimum is 5 characters)
   validates :title, presence: true, length: { minimum: 5 }
-  
+
+  validates_associated :comments
 end

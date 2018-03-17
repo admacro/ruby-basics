@@ -4,11 +4,13 @@ one:
   name: Tom
   age: 40
   occupation: Driver
-
+  email: tom@haha.com
+  
 two:
   name: Jin Bao
   age: 27
   occupation: Policeman
+  email: jinbar@haha.com
 
 # YAML fixture format is pre-processed with ERB when Rails reads fixtures.
 # the following code generates 3 users.
@@ -17,4 +19,5 @@ user_<%= n %>:
   name: <%= "user#{n}" %>
   age: <%= "#{20 + n}" %>
   occupation: <%= "Student" %>
+  email: <%= "student@school.com" %>
 <% end %>

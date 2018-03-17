@@ -3,4 +3,7 @@ class Comment < ApplicationRecord
   # :references creates a new column to comment table with name comment_id of
   # type that can hold integer values.
   belongs_to :article
+
+  validates :commenter, presence: true
+  validates :body, presence: true
 end

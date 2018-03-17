@@ -75,5 +75,26 @@ class ArticleTest < ActiveSupport::TestCase
       another_undefined_variable
     end
   end
-  
+
+
+  # validation test
+  # validates_associated
+  test "should not save article if comments are invalid" do
+    article = Article.new
+    article.title = "Washington News"
+
+    comment = Comment.new
+    comment.commenter = "James"
+
+    article.comments << comment
+
+    valid = article.valid?
+    assert_not valid
+    
+    p article.errors.messages # => {:comments=>["is invalid"]}
+    p comment.errors.messages # => {:body=>["can't be blank"]}
+
+    # error messages in comment do not bubble up to the calling model
+    # default error message for the associated attribute is "is invalid"
+  end
 end
