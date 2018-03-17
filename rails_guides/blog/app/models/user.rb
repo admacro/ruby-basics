@@ -15,6 +15,9 @@ class User < ApplicationRecord
   validates :eula, acceptance: { accept: [true, 'TRUE', 'Yes', 'accepted', 'yes'], message: 'must be abided'}
 
   validates :email, confirmation: true
+
+  # this is for validation only, no column is needed for this.
+  # naming convention is Xxx_confirmation
   validates :email_confirmation, presence: true # confirmation will only be triggered when the value is not nil, hence a presence validation must be added
 end
 

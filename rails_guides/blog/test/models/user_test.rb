@@ -58,6 +58,12 @@ class UserTest < ActiveSupport::TestCase
 
   test "should update the name of user1" do
     user = User.find_by(name: "user1")
+
+    # before update, confirmation field (email here) and acceptance field (eula here)
+    # need to be populated to avoid validation error.
+    #
+    # Rails should do the population automatically but it doesn't. This could be proposed probably?
+    # Need to find out more about persistence, validation and how they work together.
     user.update(name: "Parry", email_confirmation: user.email, eula: true)
     parry = User.find_by(name: "Parry")
     assert_equal parry, user
