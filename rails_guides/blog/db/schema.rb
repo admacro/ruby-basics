@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317143719) do
+ActiveRecord::Schema.define(version: 20180318035933) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 20180317143719) do
     t.integer "user_id"
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "name"
+    t.text "bio"
+    t.string "password"
+    t.string "ssn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
