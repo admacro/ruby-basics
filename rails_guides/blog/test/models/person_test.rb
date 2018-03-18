@@ -37,7 +37,7 @@ class PersonTest < ActiveSupport::TestCase
     # => Invalid person object: {:name=>["is too short (minimum is 2 characters)"], :bio=>["is too long (maximum is 100 characters)"], :password=>["is too short (minimum is 6 characters)"], :ssn=>["is the wrong length (should be 18 characters)"]}
 
     # custom messages :D
-    # Invalid person object: {:name=>["your name is really strange."], :bio=>["you are full of yourself. 100 is maximum allowed."], :password=>["how can you remember password this long."], :ssn=>["are you from China?"], :age=>["must be an integer"], :balance=>["is not a number"]}
+    # Invalid person object: {:name=>["your name is really strange."], :bio=>["you are full of yourself. 100 is maximum allowed."], :password=>["how can you remember password this long."], :ssn=>["Hey a, are you a Person from China? Your Ssn's length is 12345678oppsXXXXXXXX . It should have 18 numbers."], :age=>["must be an integer"], :balance=>["is not a number"]}
 
     # Note that the default error messages are plural (e.g., minimum is 1 charatcers).
     # For this reason, when :minimum is 1 you should provide a custom message or use presence:true prior to length
