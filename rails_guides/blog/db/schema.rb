@@ -10,12 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318035933) do
+ActiveRecord::Schema.define(version: 20180318093260) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
+    t.string "domain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "fines"
+    t.index ["subdomain", "domain"], name: "index_accounts_on_subdomain_and_domain", unique: true
   end
 
   create_table "articles", force: :cascade do |t|
@@ -25,6 +28,7 @@ ActiveRecord::Schema.define(version: 20180318035933) do
     t.datetime "updated_at", null: false
     t.string "user_type"
     t.integer "user_id"
+    t.boolean "archived"
     t.index ["user_type", "user_id"], name: "index_articles_on_user_type_and_user_id"
   end
 
@@ -62,6 +66,8 @@ ActiveRecord::Schema.define(version: 20180318035933) do
     t.string "ssn"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age"
+    t.decimal "balance", precision: 9, scale: 2
   end
 
   create_table "products", force: :cascade do |t|

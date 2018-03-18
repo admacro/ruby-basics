@@ -29,6 +29,9 @@ class MigrationWithCustomMessage < ActiveRecord::Migration[5.1]
         user.name = "User_#{i}"
         user.age = 18
         user.occupation = "Student"
+        user.email = "student@rails.org"
+        user.email_confirmation = user.email
+        user.eula = true
         user.save
       end
     end

@@ -1,6 +1,8 @@
 
 # ruby-basics
 
+This repository was originally setup for learning basics of Ruby programming language. As I learn and commit code every day (almost :), I started to accumulate Ruby learning resources here. Most of them are free online and are generally reliable with good quality. I went through all of them page by page, and added my own understanding to the comments for future review. It's now growing beyond basics, touching Rack, Rails, metaprograming and enterprise Rails. Put some effort into these and you will be rewarded. :D
+
 ### Thank you! So long!
 - [Ruby: Learn Ruby in 1 Hour](http://xahlee.info/ruby/ruby_basics.html) and [Ruby by Example](http://xahlee.info/ruby/ruby_index.html)
 - [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/)
@@ -27,4 +29,5 @@
 
 ### Roads Ahead
 - [Active Record Callbacks](http://edgeguides.rubyonrails.org/active_record_callbacks.html)
+- [Enterprise Rails](https://dan.chak.org/enterprise-rails/)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)

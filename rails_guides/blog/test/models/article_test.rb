@@ -97,4 +97,30 @@ class ArticleTest < ActiveSupport::TestCase
     # error messages in comment do not bubble up to the calling model
     # default error message for the associated attribute is "is invalid"
   end
+
+  # boolean presence
+  test "should not pass validation for archived field" do
+    article = Article.new
+    article.title = "Breaking news"
+    
+    # leave archived unset here
+    assert_not article.valid?
+
+    # will fail either if archived is set to nil
+    article.archived = nil
+    assert_not article.valid?
+    
+    messages = article.errors.messages
+    assert_not_empty messages
+    puts "Boolean presence: #{messages}"
+    # => Boolean presence: {:archived=>["is not included in the list"]}
+  end
+
+  test "should pass validation for archived field" do
+    article = Article.new
+    article.title = "Breaking news"
+    article.archived = false
+    assert article.valid?
+    assert_empty article.errors.messages
+  end
 end
