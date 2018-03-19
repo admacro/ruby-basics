@@ -31,8 +31,7 @@ class ComplexValidator < ActiveModel::Validator
   def initialize(product)
     @product = product
   end
-
-  # with 
+ 
   def validate
     # some complex validation here involving ivars and private methods
     # ivars => instance variables
@@ -52,7 +51,14 @@ class Product < ApplicationRecord
   end
 
   # if existing validation heplers don't offer what you need, you can write your own
-  # using `validates_each`. 
+  # using `validates_each`.
+  #
+  # About =~ and /\A[[:lower:]]/
+  # =~ is the recommanded operator for regex matching. E.g. "abc123" =~ /?c1\d*/
+  # /\A[[:lower:]]/
+  #   \A => matches the start of the string. (to match the end of the string, use \z)
+  #   [[:lower:]] => Lowercase alphabetical character (this is a POXSI bracket expression)
+  #                  see more here (https://ruby-doc.org/core-2.5.0/Regexp.html)
   validates_each :name, :description do |record, attr, value|
     record.errors.add(attr, "must start with upper case") if value =~ /\A[[:lower:]]/
   end

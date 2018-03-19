@@ -1,16 +1,20 @@
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
+
+  def new_person_attr
+    {
+     name: "James",
+     bio: "I'm a code artisan.", 
+     password: "123abc$$$",
+     ssn: "3206831985XXXXXXXX",
+     age: 32,
+     balance: 100 # This guy doesn't save :p
+    }
+  end
+
   test "should pass validation" do
-    attr_hash = {
-                 name: "James",
-                 bio: "I'm a code artisan.", 
-                 password: "123abc$$$",
-                 ssn: "3206831985XXXXXXXX",
-                 age: "32",
-                 balance: "100" # This guy doesn't save :p
-                }
-    person = Person.new(attr_hash)
+    person = Person.new(new_person_attr)
     valid = person.valid?
     assert valid
   end
@@ -41,5 +45,22 @@ class PersonTest < ActiveSupport::TestCase
 
     # Note that the default error messages are plural (e.g., minimum is 1 charatcers).
     # For this reason, when :minimum is 1 you should provide a custom message or use presence:true prior to length
+  end
+
+  test "should validate ssn on create but not on update" do
+    person = Person.create(new_person_attr)
+    valid = person.valid?
+    assert valid
+
+    person_change = new_person_attr
+    person_change[:ssn] = nil
+    person_change[:age] = 20
+    
+    valid = person.update(person_change)
+    assert valid
+
+    db_person = Person.find(person.id)
+    assert_equal 20, db_person.age
+    assert_nil db_person.ssn
   end
 end
