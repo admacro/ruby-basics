@@ -80,8 +80,8 @@ class Product < ApplicationRecord
   validates :name, featured: { message: "Only featured products are allowed" }
 
   # validate by calling custom method directly
-  # You need to do everything yoursely, like checking attribute value and adding
-  # error message to errors array, but have more control. 
+  # You need to do everything yourself, like checking attribute value and adding
+  # error message to errors array, but you have more control over the validation. 
   validate :description_sanity_check
   
   def description_sanity_check
