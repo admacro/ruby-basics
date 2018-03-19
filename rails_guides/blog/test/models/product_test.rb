@@ -10,18 +10,17 @@ class ProductTest < ActiveSupport::TestCase
     assert_not_empty messages
 
     puts messages
-    # => {:base=>["This is a preorder product."], :name=>["must start with upper case"]}
   end
 
   test "should not be valid for promotion products" do
     product = Product.new(name: "Sales buy one TV get a free TV stand",
-                            description: "This product is for promotion")
+                          description: "This product is for promotion. But it's shit.")
     assert_not product.valid?
 
     messages = product.errors.messages
     assert_not_empty messages
 
-    puts messages # => {:description=>["description has promotion info"]}
+    puts messages
   end
   
 end

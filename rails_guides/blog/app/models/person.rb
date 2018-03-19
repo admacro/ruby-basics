@@ -28,8 +28,22 @@ class Person < ApplicationRecord
   # `strict: SsnValidationFailedException`
   strict: true
 
-  
-  # By default, numericality doesn't allow nil. Use allow_nil: true to permit it.
-  validates :age, numericality: {only_integer: true} # no floating point number
-  validates :balance, numericality: true # you can further restrict the format using other options like :greater_than, :equal_to, :odd, etc.
+  # if you have multiple validations that need to be triggered when one condition 
+  # is met, instead of adding the same condition to each validation, group them 
+  # together usuing `with_options`.
+  #
+  # with_options is not only useful for validation grouping, but also useful when 
+  # you need to pass an option to multiple method calls.
+  # Check http://api.rubyonrails.org for details.
+  with_options if: :male? do |man|    
+    # By default, numericality doesn't allow nil. Use allow_nil: true to permit it.
+    man.validates :age, numericality: {only_integer: true} # no floating point number
+    
+    # you can further restrict the format using other options like :greater_than, :equal_to, :odd, etc.
+    man.validates :balance, numericality: true 
+  end
+
+  def male?
+    true
+  end
 end

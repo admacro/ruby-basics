@@ -31,13 +31,26 @@ class ComplexValidator < ActiveModel::Validator
   def initialize(product)
     @product = product
   end
- 
+  
   def validate
     # some complex validation here involving ivars and private methods
     # ivars => instance variables
     true
   end
 end
+
+# pass `featured: true` to `validates` method to have the field validated by
+# the `validate_each` method below.
+class FeaturedValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    unless value.downcase.start_with?("featured") 
+      # you need to specify a default error message for validation failure should
+      # the :message option is empty
+      record.errors[attribute] << (options[:message] || "not a featured product")
+    end
+  end
+end
+
 
 class Product < ApplicationRecord
 
@@ -61,5 +74,20 @@ class Product < ApplicationRecord
   #                  see more here (https://ruby-doc.org/core-2.5.0/Regexp.html)
   validates_each :name, :description do |record, attr, value|
     record.errors.add(attr, "must start with upper case") if value =~ /\A[[:lower:]]/
+  end
+
+  # `featured: true` will call `FeaturedValidator.validate_each` to validate :name field
+  validates :name, featured: { message: "Only featured products are allowed" }
+
+  # validate by calling custom method directly
+  # You need to do everything yoursely, like checking attribute value and adding
+  # error message to errors array, but have more control. 
+  validate :description_sanity_check
+  
+  def description_sanity_check
+    description ||= ""
+    if description.include?("shit")
+      errors.add(:description, "shit is not allowed here.")
+    end
   end
 end
