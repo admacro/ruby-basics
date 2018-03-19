@@ -44,6 +44,24 @@ p s.object_id == es.object_id # => true
 p s.equal?(es) # same as s.object_id == es.object_id
 p es.equal?(bs) # => true
 
+# A === B
+# can be understood as: B is a member of A
+# In Ruby, the case expression uses === behind the scene
+p "testing ==="
+p (1..20) === 14 # => true
+p Integer === 123 # => true
+p /test/ === "anything containts test is fine" # => true
+
+foo = "test"
+case foo
+when "bar" # same as "bar" === foo
+  p "bar"
+when "lala" # same as "lala" === foo
+  p "lala"
+else
+  p "haha" # same as "haha" === foo
+end
+
 
 # use symbol for method invocation
 def hi
