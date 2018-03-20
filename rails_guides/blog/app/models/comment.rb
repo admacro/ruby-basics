@@ -6,4 +6,10 @@ class Comment < ApplicationRecord
 
   validates :commenter, presence: true
   validates :body, presence: true
+
+  # as Comment belongs_to Article, when saving an article with comment, callbacks of
+  # Comment will also be triggered accordingly, depends on the methods called.
+  after_save do |comment|
+    puts "#{comment.commenter} added some comment to article '#{self.article.title}'"
+  end
 end

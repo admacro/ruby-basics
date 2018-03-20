@@ -82,6 +82,7 @@ class ArticleTest < ActiveSupport::TestCase
   test "should not save article if comments are invalid" do
     article = Article.new
     article.title = "Washington News"
+    article.archived = false
 
     comment = Comment.new
     comment.commenter = "James"
@@ -96,6 +97,21 @@ class ArticleTest < ActiveSupport::TestCase
 
     # error messages in comment do not bubble up to the calling model
     # default error message for the associated attribute is "is invalid"
+  end
+
+  test "should save article with comments" do
+    article = Article.new
+    article.title = "Book Review - Ruby on Rails"
+    article.archived = false
+    
+    comment = Comment.new
+    comment.commenter = "James"
+    comment.body = "I like this book."
+
+    article.comments << comment
+
+    valid = article.save
+    assert valid
   end
 
   # boolean presence

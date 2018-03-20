@@ -33,6 +33,7 @@ class UserTest < ActiveSupport::TestCase
   test "should create" do
     user_attr = {name: "Russell",
                  occupation: "Happy Genius",
+                 age: 6,
                  eula: true,
                  email: "russell@haha.com",
                  email_confirmation: "russell@haha.com"
@@ -84,6 +85,15 @@ class UserTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordInvalid do
       infant.save!
     end
+  end
+
+  test "should appear as touched" do
+    user = User.find_by(name: "user1")
+    before_touch = user.updated_at
+    user.touch
+    user = User.find_by(name: "user1")
+    after_touch = user.updated_at
+    assert after_touch > before_touch
   end
 
   
