@@ -6,7 +6,7 @@ class ProductTest < ActiveSupport::TestCase
     product = Product.new(name: "preorder xbox game of throne VII")
     assert_not product.valid?
 
-    messages = product.errors.messages
+    messages = product.errors.full_messages
     assert_not_empty messages
 
     puts messages
@@ -17,7 +17,7 @@ class ProductTest < ActiveSupport::TestCase
                           description: "This product is for promotion. But it's shit.")
     assert_not product.valid?
 
-    messages = product.errors.messages
+    messages = product.errors.full_messages
     assert_not_empty messages
 
     puts messages

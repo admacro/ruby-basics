@@ -77,7 +77,7 @@ class Product < ApplicationRecord
   end
 
   # `featured: true` will call `FeaturedValidator.validate_each` to validate :name field
-  validates :name, featured: { message: "Only featured products are allowed" }
+  validates :name, featured: { message: "is not featured" }
 
   # validate by calling custom method directly
   # You need to do everything yourself, like checking attribute value and adding
@@ -87,7 +87,7 @@ class Product < ApplicationRecord
   def description_sanity_check
     description ||= ""
     if description.include?("shit")
-      errors.add(:description, "shit is not allowed here.")
+      errors.add(:description, "contains shit which is not allowed here.")
     end
   end
 end
