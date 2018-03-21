@@ -18,7 +18,7 @@ This repository was originally setup for learning basics of Ruby programming lan
   - [Part 4: Models and Persistence](http://tommaso.pavese.me/2016/10/09/a-rack-application-from-scratch-part-4-models-and-persistence/)
 - Ruby on Rails Guides
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
-  - Model [[Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc]]
+  - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc] ]
 
 ### Doing it now ...
 - [Metaprogramming Ruby 2](https://pragprog.com/book/ppmetr2/metaprogramming-ruby-2)
