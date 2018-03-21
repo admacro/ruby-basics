@@ -7,9 +7,9 @@ class UserTest < ActiveSupport::TestCase
      :name => "James",
      :age => 33,
      :occupation => "Code Artist",
-     :eula => true,
      :email => "james@admacro.xyz",
-     :email_confirmation => "james@admacro.xyz"
+     :email_confirmation => "james@admacro.xyz",
+     :eula => true
     }
   end
 
@@ -18,15 +18,16 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "should not save" do
-    user = new_user
+    new_user
     db_user = User.find_by(name: "James")
-    assert_not_equal user, db_user
+    assert_nil db_user
   end
 
   test "should save" do
     user = new_user
-    user.save
-    db_user = User.find_by(name: "James")
+    assert user.save
+
+    db_user = User.find(user.id)
     assert_equal user, db_user
   end
 
@@ -39,7 +40,7 @@ class UserTest < ActiveSupport::TestCase
                  email_confirmation: "russell@haha.com"
                 }
     user = User.create(user_attr)
-    db_user = User.find_by(occupation: "Happy Genius")
+    db_user = User.find(user.id)
     assert_equal user, db_user
   end
 
@@ -69,7 +70,9 @@ class UserTest < ActiveSupport::TestCase
     #
     # Rails should do the population automatically but it doesn't. This could be proposed probably?
     # Need to find out more about persistence, validation and how they work together.
-    user.update(name: "Parry", email_confirmation: user.email, eula: true)
+    user.email_confirmation = user.email
+    user.eula = true
+    user.update(name: "Parry")
     parry = User.find_by(name: "Parry")
     assert_equal parry, user
   end
@@ -143,16 +146,18 @@ class UserTest < ActiveSupport::TestCase
 
   # validation helpers
   # acceptance
-  test "should not save if ToS is rejected" do
+  test "should not save if both Tos and eula are rejected" do
     user = new_user
+    user.eula = false
     user.terms_of_service = false 
     valid = user.valid?
     assert_not valid
   end
 
-  test "should skip Tos validation but not pass eula validation" do
+  test "should pass Tos validation but not eula validation" do
     user = new_user
-    user.eula = 'no' 
+    user.eula = false
+    user.terms_of_service = true
     valid = user.valid?
     assert_not valid
     assert_not_empty user.errors.messages

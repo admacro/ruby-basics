@@ -18,18 +18,21 @@ This repository was originally setup for learning basics of Ruby programming lan
   - [Part 4: Models and Persistence](http://tommaso.pavese.me/2016/10/09/a-rack-application-from-scratch-part-4-models-and-persistence/)
 - Ruby on Rails Guides
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
-  - [Active Record Basics](http://edgeguides.rubyonrails.org/active_record_basics.html)
-  - [Active Record Migrations](http://edgeguides.rubyonrails.org/active_record_migrations.html)
-  - [Active Record Validations](http://edgeguides.rubyonrails.org/active_record_validations.html)
+  - Model [[Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc]]
 
 ### Doing it now ...
 - [Metaprogramming Ruby 2](https://pragprog.com/book/ppmetr2/metaprogramming-ruby-2)
 - Ruby on Rails Guides
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
-  - [Active Record Callbacks](http://edgeguides.rubyonrails.org/active_record_callbacks.html)
+  - [Active Record Associations](http://edgeguides.rubyonrails.org/association_basics.html)
 
 ### Roads Ahead
-- [Active Record Associations](http://edgeguides.rubyonrails.org/association_basics.html)
 - [Active Record Query Interface](http://edgeguides.rubyonrails.org/active_record_querying.html)
 - [Enterprise Rails](https://dan.chak.org/enterprise-rails/)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
+
+
+[arb]: http://edgeguides.rubyonrails.org/active_record_basics.html
+[arm]: http://edgeguides.rubyonrails.org/active_record_migrations.html
+[arv]: http://edgeguides.rubyonrails.org/active_record_validations.html
+[arc]: http://edgeguides.rubyonrails.org/active_record_callbacks.html

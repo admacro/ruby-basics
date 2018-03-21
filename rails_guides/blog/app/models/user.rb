@@ -3,25 +3,35 @@
 # 
 class CreateUpdateCallbacks
   def before_create(user)
-    puts "[callback] [before_create] => #{user.inspect}"
+    puts "[callback] [before_create] => #{user.name}"
+  end
+
+  # This is different with when you register a callback by proc, see around_save below.
+  # Here, you don't need to pass the block, while for around_save, you need to pass an
+  # additional parameter (the proc object) to the method.
+  #
+  # TODO: Need to find out more behind this.
+  def around_create(user)
+    puts "[callback] [around_create] [before_yield] => #{user.name}"
+    yield
+    puts "[callback] [around_create] [after_yield] => #{user.name}"
   end
     
   def after_create(user)
-    puts "[callback] [after_create] => #{user.inspect}"
+    puts "[callback] [after_create] => #{user.name}"
   end
 
   def self.before_update(user)
-    puts "[callback] [before_update] => #{user.inspect}"
+    puts "[callback] [before_update] => #{user.name}"
   end
     
   def self.after_update(user)
-    puts "[callback] [after_update] => #{user.inspect}"
+    puts "[callback] [after_update] => #{user.name}"
   end
 end
 
 class User < ApplicationRecord
-  attr_accessor :terms_of_service, :eula
-  
+   
   validates :name, presence: true
 
   # field with acceptance validation must be set to non-nil value, otherwise
@@ -82,11 +92,11 @@ class User < ApplicationRecord
   # will be triggered whenever a new object of this class is initialized
   # for example, after method :new, :create, :find.
   after_initialize do |user|
-    puts "An object of class #{user.class} is created => #{user.inspect}"
+    puts "An object of class #{user.class} is created => #{user.name}"
   end
 
   after_find do |user|
-    puts "Ah! A record of #{user.class} is found => #{user.inspect}"
+    puts "Ah! A record of #{user.class} is found => #{user.name}"
   end
 
   after_touch do |user|
@@ -94,28 +104,38 @@ class User < ApplicationRecord
   end
 
   # callbacks regarding save are always called when create and update is called
-  before_save do
-    puts "[callback] [before_save] using block"
-  end
-  around_save do
-    puts "[callback] [around_save] saving ..."
-  end
-  after_save  do
-    puts "[callback] [after_save] using block"
+  before_save do |user|
+    puts "[callback] [before_save] about to save user => #{user.name}"
   end
 
+  # around_save can be understood as a wrapper for save. Inside it, you call yield
+  # to invoke the save. You can do things before and after yield is called. So you
+  # are coding, working, or calling 'around' the save. With around_save, you can
+  # combine before_save and after_save in one callback if you want.
+  around_save do |user, save|
+    # save is a Proc object dynamically created here
+    # #<Proc:0x007f8a3f5d4f50@/Library/Ruby/Gems/2.3.0/gems/activesupport-5.1.5/lib/active_support/callbacks.rb:102>
+    puts save
+    
+    puts "[callback] [around_save] [before yield] saving user => #{user.name}"
+    save.yield
+    puts "[callback] [around_save] [after yield] saved user => #{user.name}"
+  end
 
-  # ======== Important Finding ==========
-  # Rails seems to ignore callbacks of create and update when callbacks of save are
-  # found in the callback queue. I commented out the callbacks above (of save) and
-  # then the following callbacks of create and update worked immediately.
-  # This may be a bug or a feature. Need to find out more.
-  # ======== Important Finding ==========
+  # You can add multiple callbacks to the same callback type
+  # For non-transactional callbacks, they will be triggered in their declared order.
+  # so below proc will be called first, then :log_something_else
+  after_save do |user|
+    puts "[callback] [after_save] saved user => #{user.name}"
+  end
+
+  after_save :log_something_else
   
   # need to pass an object as the callback methods are instance methods
   # This is useful if you need to access the instance variables of the instance
   #before_create CreateUpdateCallbacks.new
   before_create CreateUpdateCallbacks.new
+  around_create CreateUpdateCallbacks.new
   after_create CreateUpdateCallbacks.new
 
   # no need to create a new object as the callback methods are class methods
@@ -124,10 +144,15 @@ class User < ApplicationRecord
   before_update CreateUpdateCallbacks
   after_update CreateUpdateCallbacks
 
+  # transactional callbacks are called in reversed order of declaration
+  # so :do_data_cleanup will be called before the proc below
   after_commit do
-    puts "Data is saved in database. Now tell user he's all set."
+    puts "[callback] [after_commit] Data is saved in database."
   end
 
+  after_commit :do_data_cleanup
+
+  
   # callback methods are better declared private
   private
   
@@ -139,6 +164,13 @@ class User < ApplicationRecord
   def callback_after_validation
     puts "[callback] [after_validation]"
   end
-    
+
+  def log_something_else
+    puts "[callback] [after_save] log_something_else => #{self.name}"
+  end
+
+  def do_data_cleanup
+    puts "[callback] [after_commit] Data clean up."
+  end
 end
 
