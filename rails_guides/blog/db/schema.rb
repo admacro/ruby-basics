@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318093260) do
+ActiveRecord::Schema.define(version: 20180323162428) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
@@ -34,8 +34,25 @@ ActiveRecord::Schema.define(version: 20180318093260) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
-    t.string "email"
-    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.datetime "published_at"
+    t.integer "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "publisher_id"
+    t.index ["author_id"], name: "index_books_on_author_id"
+    t.index ["publisher_id"], name: "index_books_on_publisher_id"
+  end
+
+  create_table "cars", force: :cascade do |t|
+    t.string "brand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "categories", force: :cascade do |t|
@@ -57,6 +74,14 @@ ActiveRecord::Schema.define(version: 20180318093260) do
     t.integer "user_id"
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "engines", force: :cascade do |t|
+    t.string "engine_number"
+    t.integer "car_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_id"], name: "index_engines_on_car_id"
   end
 
   create_table "people", force: :cascade do |t|
