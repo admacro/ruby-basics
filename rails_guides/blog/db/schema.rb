@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323162428) do
+ActiveRecord::Schema.define(version: 20180324113525) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20180323162428) do
     t.datetime "updated_at", null: false
     t.decimal "fines"
     t.index ["subdomain", "domain"], name: "index_accounts_on_subdomain_and_domain", unique: true
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.integer "physician_id"
+    t.integer "patient_id"
+    t.datetime "appointment_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_appointments_on_patient_id"
+    t.index ["physician_id"], name: "index_appointments_on_physician_id"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -84,6 +94,12 @@ ActiveRecord::Schema.define(version: 20180323162428) do
     t.index ["car_id"], name: "index_engines_on_car_id"
   end
 
+  create_table "patients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "people", force: :cascade do |t|
     t.string "name"
     t.text "bio"
@@ -93,6 +109,12 @@ ActiveRecord::Schema.define(version: 20180323162428) do
     t.datetime "updated_at", null: false
     t.integer "age"
     t.decimal "balance", precision: 9, scale: 2
+  end
+
+  create_table "physicians", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
