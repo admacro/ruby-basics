@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+robin:
+  name: Robin
+  manager: 
+
+james:
+  name: James
+  manager: robin
+
+fanny:
+  name: Fanny
+  manager: robin
+
+cassie:
+  name: Cassie
+  manager: james
+
+helen:
+  name: Helen
+  manager: james

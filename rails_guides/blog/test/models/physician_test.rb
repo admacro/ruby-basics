@@ -21,6 +21,14 @@ class PhysicianTest < ActiveSupport::TestCase
   # patients.create(attributes = {})
   # patients.create!(attributes = {})
   # patients.reload
+
+  # Notice above patients is a method. What's the matter here?
+  # If `patients` is a method, where is the name from? It's given by us when we declare
+  # the association, like this, has_many :patients
+  # So, we are not free to use any name for our associations. This also means, we need
+  # to be careful not to cause name collisions when creating our models and associations.
+  # For example, `attributes` is aleady defined in ActiveRecord::Base
+
   test "should load all patients for Dr. Stephen" do
     physician = Physician.find_by(name: "Dr. Stephen")
     assert_equal 2, physician.patients.size

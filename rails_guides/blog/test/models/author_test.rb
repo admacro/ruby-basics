@@ -20,4 +20,23 @@ class AuthorTest < ActiveSupport::TestCase
     book = Book.find_by(author_id: author_id)
     assert_nil book
   end
+
+  # bi-directional association
+  #
+  # NOTE: associations with scope, :through, or :foreign_key are not identified as
+  #       bi-directional. To fix this, use :inverse_of option on the "other side" of
+  #       belongs_to.
+  # For example:
+  #   has_many :books, inverse_of: 'writer'
+  #   has_many :patients, through: :appointments, inverse_of: 'physician'
+  #
+  test "should load one copy of the author" do
+    russell = "Bertrand Russell"
+    author = Author.find_by(name: russell)
+
+    # In bi-directional association, Rails will only load one copy of the Author object
+    book = author.books.first
+    author.name = "Russell"
+    assert_equal author.name, book.author.name
+  end
 end
