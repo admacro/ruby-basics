@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324113525) do
+ActiveRecord::Schema.define(version: 20180325094952) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
@@ -44,6 +44,12 @@ ActiveRecord::Schema.define(version: 20180324113525) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bicycles", force: :cascade do |t|
+    t.string "brand"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -86,12 +92,33 @@ ActiveRecord::Schema.define(version: 20180324113525) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "courses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "courses_students", id: false, force: :cascade do |t|
+    t.integer "student_id", null: false
+    t.integer "course_id", null: false
+    t.index ["course_id", "student_id"], name: "index_courses_students_on_course_id_and_student_id"
+    t.index ["student_id", "course_id"], name: "index_courses_students_on_student_id_and_course_id"
+  end
+
   create_table "engines", force: :cascade do |t|
     t.string "engine_number"
     t.integer "car_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_engines_on_car_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.integer "appointment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_events_on_appointment_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -129,6 +156,29 @@ ActiveRecord::Schema.define(version: 20180324113525) do
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
+  create_table "sparks", force: :cascade do |t|
+    t.string "fuel"
+    t.integer "engine_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["engine_id"], name: "index_sparks_on_engine_id"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tires", force: :cascade do |t|
+    t.integer "size"
+    t.string "rollable_type"
+    t.integer "rollable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rollable_type", "rollable_id"], name: "index_tires_on_rollable_type_and_rollable_id"
+  end
+
   create_table "trains", force: :cascade do |t|
     t.string "manufacturer", null: false
     t.integer "seats"
@@ -136,6 +186,12 @@ ActiveRecord::Schema.define(version: 20180324113525) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "groups"
+  end
+
+  create_table "trucks", force: :cascade do |t|
+    t.string "brand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

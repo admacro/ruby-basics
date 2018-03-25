@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: Jack
-
-two:
-  name: Tom
+<% 30.times do |n| %>
+student_<%= "#{n}" %>:
+  name: student_<%= "#{n}" %>
+<% end %>
