@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+########
+# NOTE #
+########
+# Even the data entries have no actual data, Rails will still create two records with nil
+# values for columns with no default value.
+#
+# #<ActiveRecord::Relation [#<Vehicle id: 298486374, type: nil, color: nil, price: nil, created_at: "2018-03-29 12:28:19", updated_at: "2018-03-29 12:28:19">, #<Vehicle id: 980190962, type: nil, color: nil, price: nil, created_at: "2018-03-29 12:28:19", updated_at: "2018-03-29 12:28:19">]>
+#
+# This is no problem if you have only one fixture like this. But when you have another fixture
+# with same empty data entries like these, Rails will complain with following error:
+#
+# Error:
+# MotorcycleTest#test_should_save:
+# ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: vehicles.id: INSERT INTO "vehicles" ("created_at", "updated_at", "id") VALUES ('2018-03-29 12:27:23.168787', '2018-03-29 12:27:23.168787', 980190962)
+#
+# So, it's better to remove all of the empty data entries in fixture files.
+#
+#one: {}
+# column: value
+#
+#two: {}
+# column: value

@@ -1,0 +1,2 @@
+class Tricycle < Vehicle
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325130103) do
+ActiveRecord::Schema.define(version: 20180329113553) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
@@ -209,6 +209,14 @@ ActiveRecord::Schema.define(version: 20180325130103) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "type"
+    t.string "color"
+    t.decimal "price", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

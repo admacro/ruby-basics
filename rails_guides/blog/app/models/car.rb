@@ -1,4 +1,4 @@
-class Car < ApplicationRecord
+class Car < ActiveRecord::Base
 
   # The has_one association sets up a one-to-one connection with another model (Engine).
   # In the database, the connection between the two models is backed up by a foreign key 
