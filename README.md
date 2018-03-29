@@ -25,8 +25,12 @@ This repository was originally setup for learning basics of Ruby programming lan
 - Ruby on Rails Guides
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   - [Active Record Query Interface](http://edgeguides.rubyonrails.org/active_record_querying.html)
-
+  
 ### Roads Ahead
+- [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
+- [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
+- [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
+- [Security](http://edgeguides.rubyonrails.org/security.html)
 - [Layouts and Rendering](http://edgeguides.rubyonrails.org/layouts_and_rendering.html)
 - [Enterprise Rails](https://dan.chak.org/enterprise-rails/)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
