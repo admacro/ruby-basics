@@ -92,11 +92,11 @@ class User < ApplicationRecord
   # will be triggered whenever a new object of this class is initialized
   # for example, after method :new, :create, :find.
   after_initialize do |user|
-    puts "An object of class #{user.class} is created => #{user.name}"
+#    puts "An object of class #{user.class} is created => #{user.name}"
   end
 
   after_find do |user|
-    puts "Ah! A record of #{user.class} is found => #{user.name}"
+#    puts "Ah! A record of #{user.class} is found => #{user.name}"
   end
 
   after_touch do |user|

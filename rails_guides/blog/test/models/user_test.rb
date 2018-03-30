@@ -366,6 +366,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal youngest, users.first
 
     # order by multiple columns
+    #
     # Note
     # columns in ascending order should have :asc declared explicitly if they are not
     # the first ordering parater. For example, User.order(occupation: :desc, :age) will
@@ -374,6 +375,38 @@ class UserTest < ActiveSupport::TestCase
     users = User.order(occupation: :desc).order(:age)
     youngest = users.min {|u1, u2| u1.age <=> u2.age}
     assert_equal youngest, users.first
+  end
+
+  test "should select names only" do
+    users = User.select(:name).where.not(occupation: 'Student')
+    users.each do |user|
+      # age attribute does not even exist
+      # => ActiveModel::MissingAttributeError: missing attribute: age
+      # assert_nil user.age
+      
+      assert_nil user.id
+      assert_not_empty user.name
+      puts user.inspect # => #<User id: nil, name: "Jin Bao">
+    end
+  end
+
+  test "should select distinct email addresses" do
+    # => ActiveModel::MissingAttributeError: missing attribute: name
+    # Cause: in callbacks of User model, user.name is called. Check user.rb for details.
+    # Solution: disable callbacks of after_initialize and after_find.
+    users = User.select(:email).distinct
+    assert_equal 3, users.size
+    users.each {|u| puts u.email}
+  end
+
+  test "should get 2 records only and from 3rd row" do
+    users = User.limit(2).offset(2)
+    users.each {|u| puts u.email}
+  end
+
+  test "should group by email" do
+    users = User.select('distinct occupation, max(age) as age, email').group(:email).having('age < ?', 30).unscope(:having)
+    users.each {|u| puts u.email}
   end
 
 end
