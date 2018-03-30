@@ -213,4 +213,167 @@ class UserTest < ActiveSupport::TestCase
     assert_not_empty messages
     puts "format errors: #{messages}"
   end
+
+
+  # query interface
+  test "should take records from db" do
+    # generates SQL:
+    #   SELECT * FROM users LIMIT 1
+    # returns nil if no record found
+    user = User.take # take 1 (default) record from db
+    assert_not_nil user
+    puts "Query take => #{user.inspect}"
+
+    # take 3
+    # generates SQL:
+    #   SELECT * FROM users LIMIT 3
+    users = User.take(3)
+    assert_equal 3, users.size
+    puts "Query take => #{users.inspect}"
+  end
+
+  # first
+  test "should find the first of all records ordered by id" do
+    # generates SQL:
+    #   SELECT * FROM users ORDER BY users.id ASC LIMIT 1
+    # returns nil if no record found
+    user = User.first # gets the first 1 (default) record from db
+    assert_not_nil user
+    puts "Query first => #{user.inspect}"
+
+    # last 2 order by name in descent order
+    # generates SQL:
+    #   SELECT * FROM users ORDER BY users.id DESC LIMIT 2
+    users = User.order(:name).last(2)
+    assert_equal 2, users.size
+    puts "Query first => #{users.inspect}"
+  end
+
+  test "should get the same record for find_by and where" do
+    # generates SQL:
+    #   SELECT * FROM users ORDER BY users.id ASC LIMIT 1
+    # returns nil if no record found
+    user1 = User.find_by name: "Tom"
+    user2_relation = User.where(:name => "Tom")
+    assert_not_equal user1, user2_relation # different class of object
+
+    puts "user1.class => #{user1.class}" # => User
+    puts "user2_relation.class => #{user2_relation.class}" # => User::ActiveRecord_Relation
+    
+    assert_equal user1, user2_relation.take # use take to get the first record
+  end
+
+  test "should batch process all records" do
+    # Rails gets all the data in users table, creates an object for each row, 
+    # and stores all the objects in memory. This approach becomes increasingly
+    # impractical as the table size increases, but usually should be ok if total 
+    # number of records is around a thousand.
+    User.all.each do |user|
+      # processing user data ...
+      # for example, send each user a newsletter
+      assert_not_nil user
+      puts user.inspect
+    end
+
+    # find_each retrieves users in batches of 1000 and yields them to the block one by one.
+    # you can change the batch size to a smaller or larger value depend on your table size.
+    # 
+    # find_each also works on relations, for example:
+    #   User.where('age > 20').find_each(batch_size: 5000) do |user| ... end
+    #
+    # check API for other options, such as :start, :finish, :error_on_ignore
+    User.find_each do |user|
+      assert_not_nil user
+    end
+
+    # find_in_batches yields batches to the block as an array of models
+    User.find_in_batches do |users| # note the type of the block parameter is Array
+      assert_equal 5, users.size
+    end
+  end
+
+  # Building your own conditions as pure strings can leave you vulnerable to SQL injection exploits.
+  # like this:
+  #   User.where('age > #{param[:age]}')
+  test "should find by conditions" do
+    # Array condition - one condition
+    users = User.where('age > ?', 25)
+    users.each do |user|
+      assert user.age > 25
+    end
+
+    # Array condition - multiple conditions
+    users = User.where('age > ? and occupation = ?', 21, 'Student')
+    users.each do |user|
+      assert user.age > 21
+      assert_equal 'Student', user.occupation
+    end
+
+    # placeholder conditions - using Hash
+    users = User.where('age > :age and occupation = :occupation', {age: 20, occupation: 'Student'})
+    users.each do |user|
+      assert user.age > 20
+      assert_equal 'Student', user.occupation
+    end
+
+    # Hash condition
+    users = User.where(occupation: 'Student')
+    users.each do |user|
+      assert_equal 'Student', user.occupation
+    end
+
+    # range condition
+    # generates SQL:
+    #   SELECT * FROM users WHERE (users.age BETWEEN 25 AND 40)
+    users = User.where(age: (25..40))
+    users.each do |user|
+      assert user.age >= 25
+      assert user.age <= 40
+    end
+
+    # subset condition (in (...))
+    # generates SQL:
+    #   SELECT * FROM users WHERE users.age IN (20, 21)
+    users = User.where(age: [20, 21])
+    users.each do |user|
+      assert user.age == 20 || user.age == 21
+    end
+
+    # NOT condition ( != )
+    # generates SQL:
+    #   SELECT * FROM users WHERE (users.occupation != 'Student')
+    users = User.where.not(occupation: 'Student')
+    users.each do |user|
+      assert_not_equal 'Student', user.occupation
+    end
+
+    # OR condition ( or )
+    # generates SQL:
+    #   SELECT * FROM users WHERE (users.occupation == 'Student' OR users.age > 35)
+    #
+    # NOTICE the parameter of `or` method
+    #   .or('age > ?', 35) will not work
+    users = User.where(occupation: 'Student').or(User.where('age > ?', 35))
+    users.each do |user|
+      assert (user.occupation == 'Student' || user.age > 35)
+    end
+  end
+
+  test "should be in order" do
+    # order by age asc (default)
+    users = User.order(:age)
+    youngest = users.min {|u1, u2| u1.age <=> u2.age}
+    assert_equal youngest, users.first
+
+    # order by multiple columns
+    # Note
+    # columns in ascending order should have :asc declared explicitly if they are not
+    # the first ordering parater. For example, User.order(occupation: :desc, :age) will
+    # not work, but User.order(:age, occupation: :desc) works. However, you can call
+    # order method multiple times to overcome this to make code cleaner, like this:
+    users = User.order(occupation: :desc).order(:age)
+    youngest = users.min {|u1, u2| u1.age <=> u2.age}
+    assert_equal youngest, users.first
+  end
+
 end

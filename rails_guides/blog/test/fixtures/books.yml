@@ -2,6 +2,15 @@
 
 happiness:
   title: The Conquest of Happiness
-  published_at: 2018-03-22 16:45:08
+  published_at: 1965-03-22 16:45:08
   author: russell
 
+philosophy:
+  title: The History of Western Philosophy
+  published_at: 1955-02-11 09:00:00
+  author: russell
+
+blog:
+  title: admacro
+  published_at: 2018-03-30 20:00:00
+  author: james
