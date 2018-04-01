@@ -216,6 +216,11 @@ class UserTest < ActiveSupport::TestCase
 
 
   # query interface
+  #
+  # Finder methods that return a collection, such as where and group, return an
+  # instance of ActiveRecord::Relation. Methods that find a single entity, such
+  # as find and first, return a single instance of the model.
+  #
   test "should take records from db" do
     # generates SQL:
     #   SELECT * FROM users LIMIT 1
@@ -228,7 +233,9 @@ class UserTest < ActiveSupport::TestCase
     # generates SQL:
     #   SELECT * FROM users LIMIT 3
     users = User.take(3)
+    user_count = User.take(4).count
     assert_equal 3, users.size
+    assert_equal 4, user_count
     puts "Query take => #{users.inspect}"
   end
 
@@ -404,9 +411,52 @@ class UserTest < ActiveSupport::TestCase
     users.each {|u| puts u.email}
   end
 
+  # group with having
+  #
+  # other overriding conditions besides unscope are:
+  #   only => only(:order, :where)
+  #   rewhere => overrides where
+  #   reorder => overrides order
+  #   reverse_order => reverses the order specified if exists, otherwise orders
+  #     by id descending order
   test "should group by email" do
     users = User.select('distinct occupation, max(age) as age, email').group(:email).having('age < ?', 30).unscope(:having)
     users.each {|u| puts u.email}
+  end
+
+
+  # none
+  def special_users(occupation)
+    if not occupation.empty?
+      User.where(occupation: occupation)
+    else
+      # none makes chaining possible after the call of this method (special_users)
+      # as returning nil or [] will break the caller code
+      User.none # => returns an empty Relation and fires no queries 
+    end
+  end
+  
+  test "should chain" do
+    user_count = special_users("").where('age > ?', 25).count
+    assert_equal 0, user_count
+ 
+    user_count = special_users("Student").where('age < ?', 22).count
+    assert_equal 2, user_count
+  end
+
+
+  # readonly
+  #
+  # => ActiveRecord::ReadOnlyRecord: User is marked as readonly
+  test "should be readonly" do
+    new_email = "new_address@school.com"
+    students = User.readonly.where(occupation: "Student")
+    students.each do |s|
+      s.email = new_email
+      s.email_confirmation = s.email # this is checked first, before checking readonly attribute
+      s.save
+      assert_not_equal new_email, s.email
+    end
   end
 
 end
