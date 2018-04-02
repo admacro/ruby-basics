@@ -18,16 +18,15 @@ This repository was originally setup for learning basics of Ruby programming lan
   - [Part 4: Models and Persistence](http://tommaso.pavese.me/2016/10/09/a-rack-application-from-scratch-part-4-models-and-persistence/)
 - Ruby on Rails Guides
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
-  - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass] ]
+  - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass], [Query][qry] ]
 
 ### Doing it now ...
 - [Metaprogramming Ruby 2](https://pragprog.com/book/ppmetr2/metaprogramming-ruby-2)
 - Ruby on Rails Guides
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
-  - [Active Record Query Interface](http://edgeguides.rubyonrails.org/active_record_querying.html)
+  - [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
   
 ### Roads Ahead
-- [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
 - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
 - [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
 - [Security](http://edgeguides.rubyonrails.org/security.html)
@@ -41,3 +40,4 @@ This repository was originally setup for learning basics of Ruby programming lan
 [arv]: http://edgeguides.rubyonrails.org/active_record_validations.html
 [arc]: http://edgeguides.rubyonrails.org/active_record_callbacks.html
 [ass]: http://edgeguides.rubyonrails.org/association_basics.html
+[qry]: http://edgeguides.rubyonrails.org/active_record_querying.html

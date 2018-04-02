@@ -39,4 +39,29 @@ class AuthorTest < ActiveSupport::TestCase
     author.name = "Russell"
     assert_equal author.name, book.author.name
   end
+
+  # this method alone is not very useful as you can only pass one attribute to the method.
+  # In real world, objects usually have more than one attribute, to create a valid record,
+  # the object must pass various validations.
+  #
+  # To make it useful, we can use create_with, or pass a block to it.
+  #   Author.create_with(xxx: xxx, yyy: yyy).find_or_create_by(zzz: zzz)
+  #   Author.find_or_create_by(zzz: zzz) do |a|
+  #     a.xxx = xxx
+  #     a.yyy = yyy
+  #     ...
+  #   end
+  # 
+  test "should create if not found" do
+    name = 'Parry'
+    parry = Author.find_or_create_by(name: name)
+    assert_not_nil parry
+    assert_equal name, parry.name
+  end
+
+  test "should find by sql" do
+    authors = User.find_by_sql('select * from authors')
+    assert_equal 2, authors.size
+  end
+
 end

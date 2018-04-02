@@ -47,5 +47,38 @@ class PhysicianTest < ActiveSupport::TestCase
     
     assert_equal 1, stephen.patients.size
   end
+
+  # join
+  test "should join" do
+    # select only physicians who have appointments
+    #
+    # => SELECT DISTINCT "physicians".* FROM "physicians"
+    #    INNER JOIN "appointments" ON "appointments"."physician_id" = "physicians"."id"
+    #
+    # you can add conditions to the join to further filter the results
+    #   Physician.joins(:appointments).where(...)
+    physicians = Physician.joins(:appointments).distinct
+    assert_equal 2, physicians.size
+    physicians.each { |p| puts p.inspect }
+  end
+
+  test "should include all physicians" do
+    physicians = Physician.left_outer_joins(:appointments).distinct
+    assert_equal 3, physicians.size
+  end
+
+  test "should load physicians with appointments data" do
+    # with includes, Rails will loads associated records of the object
+    # without incldues, Rails will query DB for each iteration of the loop
+    # If you know you are gonna need to access the associated data after,
+    # use includes to do eager loading.
+    physicians = Physician.includes(appointments: :patient).all
+    assert_equal 3, physicians.size
+    physicians.each do |p|
+      p.appointments.each do |a|
+        puts "#{p.name} has an appointment with #{a.patient.name} at #{a.appointment_date}"
+      end
+    end
+  end
   
 end

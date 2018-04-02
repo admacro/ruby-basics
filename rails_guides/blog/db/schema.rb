@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329113553) do
+ActiveRecord::Schema.define(version: 20180402055546) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "subdomain"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20180329113553) do
     t.datetime "appointment_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lock_version"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
     t.index ["physician_id"], name: "index_appointments_on_physician_id"
   end

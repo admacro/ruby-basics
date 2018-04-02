@@ -459,4 +459,45 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+
+  # dynamic finders
+  #   find_by_<attribute_name>
+  # 
+  # examples:
+  #   find_by_year(1985)
+  #   find_by_archived!(false)
+  #   find_by_first_name("James")
+  test "should find by name" do
+    tom = User.find_by_name("Tom")
+    assert_not_nil tom
+    assert_equal "Driver", tom.occupation
+  end
+
+
+  # pluck
+  #   query single or multiple columns
+  test "should get all names of users" do
+    # => SELECT "users"."age" FROM "users"
+    names = User.pluck(:name)
+    assert_not_empty names
+    names.each {|n| puts n}
+
+    # => SELECT "users"."id", "users"."name", "users"."age" FROM "users"
+    # returns results in two-dimentional array
+    #   [[298486374, "Jin Bao", 27], [338193910, "user0", 20], ... ]
+    users = User.pluck(:id, :name, :age)
+    assert_not_empty users
+    users.each {|n| p n}
+  end
+
+  test "should calculate" do
+    min = User.minimum(:age)
+    max = User.maximum(:age)
+    avg = User.average(:age)
+    sum = User.sum(:age)
+    puts "minimal age of all users is #{min}"
+    puts "maximal age of all users is #{max}"
+    puts "average age of all users is #{avg}"
+    puts "sum of all users' age is #{sum}"
+  end  
 end
