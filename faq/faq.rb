@@ -75,12 +75,19 @@ end
 }
 
 # CONSTANTS
+Xyz = "top level constant"
 module M1
   M_CONST = "I love Ruby!"
+  Xyz = "module level constant"
   class C1
     C_CONST = "I love Ruby more!"
+    Xyz = "class level constant"
+    puts Xyz
+    puts "root level constant using :: => #{::Xyz}" # root level constant using :: => top level constant
   end
+  puts Xyz
 end
+puts Xyz
 
 p M1::M_CONST
 p M1::C1::C_CONST
