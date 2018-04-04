@@ -6,11 +6,13 @@
 # It seems that refinement is less powerful when compared to monkeypatch for
 # patching or extending a class. It only guarantees the effect of the refined methods.
 # You cannot get the same effect when calling a unrefined method which calls your
-# refined method.
+# refined method. But it is safer when you are not sure of the impact of your change.
+# And it's very useful when you want different versions of the same method in different
+# places across your application. 
 #
 # In other words, while monkeypatch has butterfly effect (sensitive and implicit), 
 # refinement has restricted/local effect only on cases to which the refined methods are
-# applied/called explicitly.
+# applied/called explicitly. It works similar to overriding inherited methods.
 #
 # To summarize,
 #   Monkeypatch => change one method, affect the method itself and other methods which reference it
