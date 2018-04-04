@@ -79,11 +79,15 @@ Xyz = "top level constant"
 module M1
   M_CONST = "I love Ruby!"
   Xyz = "module level constant"
+  p Module.nesting # => [M1]
+
   class C1
     C_CONST = "I love Ruby more!"
     Xyz = "class level constant"
+    
     puts Xyz
     puts "root level constant using :: => #{::Xyz}" # root level constant using :: => top level constant
+    p Module.nesting # => [M1::C1, M1]
   end
   puts Xyz
 end
@@ -91,6 +95,9 @@ puts Xyz
 
 p M1::M_CONST
 p M1::C1::C_CONST
+
+p M1.constants # => [:M_CONST, :Xyz, :C1]
+p Module.constants
 
 # variable passing (object references are passed)
 # There is no equivalent of other language’s pass-by-reference semantics.
