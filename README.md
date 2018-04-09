@@ -29,6 +29,7 @@ This repository was originally setup for learning basics of Ruby programming lan
 ### Roads Ahead
 - [Metaprogramming Ruby 2][meta]
   - Ruby [ Class Definitions, Code That Writes Code ]
+  - [Exercises][metarbl]
 - Ruby on Rails Guides
   - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
   - [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
@@ -39,6 +40,7 @@ This repository was originally setup for learning basics of Ruby programming lan
 
 
 [meta]: https://pragprog.com/book/ppmetr2/metaprogramming-ruby-2
+[metarbl]: http://ruby-metaprogramming.rubylearning.com/
 
 [arb]: http://edgeguides.rubyonrails.org/active_record_basics.html
 [arm]: http://edgeguides.rubyonrails.org/active_record_migrations.html
