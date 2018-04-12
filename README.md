@@ -17,18 +17,19 @@ This repository was originally setup for learning basics of Ruby programming lan
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
   - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass], [Query][qry] ]
 - [Metaprogramming Ruby 2][meta]
-  - Ruby [ M Word, Object Model, Methods, Blocks, Class Definitions ]
+  - Ruby [ M Word, Object Model, Methods, Blocks, Class Definitions, Code That Writes Code ]
+  - Rails []
 
 ### Doing it now ...
 - [Metaprogramming Ruby 2][meta]
-  - Ruby [ Code That Writes Code ]
+  - Rails [ ActiveRecord ]
 - Ruby on Rails Guides
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   - [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
   
 ### Roads Ahead
 - [Metaprogramming Ruby 2][meta]
-  - Rails [ ActiveRecord ]
+  - Rails [ ActiveSupport, alias_method_chain, Attribute Methods ]
   - [Exercises][metarbl]
 - Ruby on Rails Guides
   - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
