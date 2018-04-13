@@ -9,6 +9,20 @@
 #   return true for that value, then you get a runtime exception.
 # A class should gain access to attr_checked only when it includes a CheckedAttributes module
 
+# This is my solution. It's different with the solution in the book using Object#extend (p162).
+# Both my solution and the solution in the book pass the test (of course).
+#
+# So what's the difference?
+# I had this question in my mind and found someone asked the same question on Nov 9, 2009. :D
+#   https://stackoverflow.com/questions/1710841/base-extend-vs-base-class-eval-extend
+#
+# Anwser from the above page.
+#   The only relevant difference is that only classes respond to "class_eval", whereas
+#   both classes and instances respond to "extend".
+#   If you don't plan on using your method with object instances, then they are equivalent,
+#   though the second implementation can be used to add instance methods to a particular
+#   instance, while the first one cannot.
+#
 module CheckedAttributes
   def self.included(klass)
     klass.class_eval do
