@@ -30,7 +30,6 @@ This repository was originally setup for learning basics of Ruby programming lan
   
 ### Roads Ahead
 - [Metaprogramming Ruby 2][meta]
-  - Appendixes [ Spells ]
   - [Exercises][metarbl]
 - Ruby on Rails Guides
   - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
