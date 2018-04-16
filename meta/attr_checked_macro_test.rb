@@ -3,6 +3,9 @@
 
 require 'test/unit'
 
+# class macro (p233, 117)
+# class macros are just class methods
+#
 class Person
   attr_checked :age do |v|
     v >= 18

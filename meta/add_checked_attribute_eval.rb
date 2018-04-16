@@ -1,6 +1,8 @@
 # coding: utf-8
 # ruby
 
+# code processor; eval (p233, 144)
+#
 def add_checked_attribute(klass, attribute)
   code = <<-end_eval
        class #{klass}

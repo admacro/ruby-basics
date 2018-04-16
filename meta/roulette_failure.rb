@@ -1,6 +1,7 @@
 # coding: utf-8
 # ruby
 
+# Ghost method
 class Roulette
   def method_missing(name, *args)
     person = name.to_s.capitalize

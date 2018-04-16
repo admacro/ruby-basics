@@ -1,6 +1,7 @@
 # coding: utf-8
 # ruby
 
+# class extension, a special case of Object Extension (p130)
 module MyModule
   def my_method
     'hello from module instance method'
@@ -8,8 +9,10 @@ module MyModule
 end
 
 class MyClass
-  # this is same as using 'extend'
-  class << self
+  # Add instance methods of MyModule to the class instance of MyClass class,
+  # which means these methods actually become the class methods of MyClass.
+  # This is the same as using 'extend'
+  class << self # alternative: class << MyClass
     include MyModule
   end
 end
