@@ -19,18 +19,14 @@ This repository was originally setup for learning basics of Ruby programming lan
 - [Metaprogramming Ruby 2][meta]
   - Ruby [ M Word, Object Model, Methods, Blocks, Class Definitions, Code That Writes Code ]
   - Rails [ ActiveRecord, ActiveSupport, alias_method_chain, Attribute Methods ]
-  - Appendixes [ Common Idioms, DSL]
+  - Appendixes [ Common Idioms, DSL, Spells]
 
 ### Doing it now ...
-- [Metaprogramming Ruby 2][meta]
-  - Appendixes [ Spells ]
 - Ruby on Rails Guides
-  - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   - [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
+  - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   
 ### Roads Ahead
-- [Metaprogramming Ruby 2][meta]
-  - [Exercises][metarbl]
 - Ruby on Rails Guides
   - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
   - [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
