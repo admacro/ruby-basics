@@ -16,6 +16,7 @@ This repository was originally setup for learning basics of Ruby programming lan
 - Ruby on Rails Guides
   - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
   - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass], [Query][qry] ]
+  - [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
 - [Metaprogramming Ruby 2][meta]
   - Ruby [ M Word, Object Model, Methods, Blocks, Class Definitions, Code That Writes Code ]
   - Rails [ ActiveRecord, ActiveSupport, alias_method_chain, Attribute Methods ]
@@ -23,15 +24,14 @@ This repository was originally setup for learning basics of Ruby programming lan
 
 ### Doing it now ...
 - Ruby on Rails Guides
-  - [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
+  - [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
   - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
   
 ### Roads Ahead
 - Ruby on Rails Guides
-  - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
-  - [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
-  - [Security](http://edgeguides.rubyonrails.org/security.html)
   - [Layouts and Rendering](http://edgeguides.rubyonrails.org/layouts_and_rendering.html)
+  - [Active Job Basics](http://edgeguides.rubyonrails.org/active_job_basics.html)
+  - [Security](http://edgeguides.rubyonrails.org/security.html)
 - [Enterprise Rails](https://dan.chak.org/enterprise-rails/)
 - [Developing Games With Ruby](https://leanpub.com/developing-games-with-ruby)
 
