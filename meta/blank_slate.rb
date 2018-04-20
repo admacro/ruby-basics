@@ -6,7 +6,7 @@
 #
 # background and explaination
 #
-# Since every class inherits from Object inexplicitly, it also gets all the
+# Since every class inherits from Object inplicitly, it also gets all the
 # methods of Object by default. When you use method_missing spell to enpower
 # your API users to create their own methods, it's possible they run into
 # situations where the method name collide with those in Object. Therefore, 
