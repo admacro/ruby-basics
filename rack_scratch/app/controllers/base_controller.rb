@@ -48,6 +48,7 @@ class BaseController
     
     # binding is a method of Ruby core which returns the current 
     # Binding object as the evaluation context
+    # You can treat Binding objects as contexts of breakpoints for debugging
     ERB.new(erb_file).result(binding)
   end
   
