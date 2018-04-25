@@ -13,19 +13,20 @@ This repository was originally setup for learning basics of Ruby programming lan
 - [A Minimal Rack Server and App](https://github.com/admacro/ruby-basics/tree/master/rack_server)
 - A Rack application from scratch
   - [ [Introduction][part1], [Routes and Controllers][part2], [View templates][part3], [Models and Persistence][part4] ]
-- Ruby on Rails Guides
-  - [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
-  - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass], [Query][qry] ]
-  - [Asset Pipeline](http://edgeguides.rubyonrails.org/asset_pipeline.html)
 - [Metaprogramming Ruby 2][meta]
   - Ruby [ M Word, Object Model, Methods, Blocks, Class Definitions, Code That Writes Code ]
   - Rails [ ActiveRecord, ActiveSupport, alias_method_chain, Attribute Methods ]
   - Appendixes [ Common Idioms, DSL, Spells]
+- Ruby on Rails Guides
+  - [Getting Startet with Rails][starting]
+  - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass], [Query][qry] ]
+  - Controller [ [Overview][aco] ]
+  - [Asset Pipeline][asset]
 
 ### Doing it now ...
 - Ruby on Rails Guides
-  - [Caching with Rails](http://edgeguides.rubyonrails.org/caching_with_rails.html)
-  - [Testing Rails Applications](http://edgeguides.rubyonrails.org/testing.html)
+  - [Caching with Rails][caching]
+  - [Testing Rails Applications][testing]
   
 ### Roads Ahead
 - Ruby on Rails Guides
@@ -39,12 +40,18 @@ This repository was originally setup for learning basics of Ruby programming lan
 [meta]: https://pragprog.com/book/ppmetr2/metaprogramming-ruby-2
 [metarbl]: http://ruby-metaprogramming.rubylearning.com/
 
+[starting]: http://guides.rubyonrails.org/getting_started.html
 [arb]: http://edgeguides.rubyonrails.org/active_record_basics.html
 [arm]: http://edgeguides.rubyonrails.org/active_record_migrations.html
 [arv]: http://edgeguides.rubyonrails.org/active_record_validations.html
 [arc]: http://edgeguides.rubyonrails.org/active_record_callbacks.html
 [ass]: http://edgeguides.rubyonrails.org/association_basics.html
 [qry]: http://edgeguides.rubyonrails.org/active_record_querying.html
+[aco]: http://edgeguides.rubyonrails.org/action_controller_overview.html
+
+[asset]: http://edgeguides.rubyonrails.org/asset_pipeline.html
+[caching]: http://edgeguides.rubyonrails.org/caching_with_rails.html
+[testing]: http://edgeguides.rubyonrails.org/testing.html
 
 [part1]: http://tommaso.pavese.me/2016/06/05/a-rack-application-from-scratch-part-1-introducting-rack/
 [part2]: http://tommaso.pavese.me/2016/07/26/a-rack-application-from-scratch-part-2-routes-and-controllers/
