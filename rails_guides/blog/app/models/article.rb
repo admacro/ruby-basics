@@ -32,4 +32,10 @@ class Article < ApplicationRecord
   # this will validate the comments objects (if there are any) using the validation
   # rules specified in Comment class.
   validates_associated :comments
+
+  before_validation do |article|
+    article.archived = false
+    puts "archived = #{article.archived}"
+  end
+
 end
