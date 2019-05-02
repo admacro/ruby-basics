@@ -18,7 +18,7 @@ This repository was originally setup for learning basics of Ruby programming lan
   - Rails [ ActiveRecord, ActiveSupport, alias_method_chain, Attribute Methods ]
   - Appendixes [ Common Idioms, DSL, Spells]
 - Ruby on Rails Guides
-  - [Getting Startet with Rails][starting]
+  - [Getting Started with Rails][starting]
   - Models [ [Basics][arb], [Migrations][arm], [Validations][arv], [Callbacks][arc], [Associations][ass], [Query][qry] ]
   - Controller [ [Overview][aco] ]
   - [Asset Pipeline][asset]
