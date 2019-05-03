@@ -5,6 +5,17 @@ a = 2
 b = "flat white"
 p a, b, 9 # prints each on a new line
 
+# return printed objects
+# either as it is when there is only one object
+# or, return all in an array if there are more than one object
+(p a) # => 2
+(p a).class # => Integer
+(p b) # => flat white
+(p b).class # => String
+(p true).class # => TrueClass
+(p nil).class # => NilClass
+(p a,b,false).class # => Array
+
 =begin
 multil-line comment starts with "=begin" and ends with "=end"
 p a, b, 3
@@ -29,6 +40,11 @@ single quotes
 contains \n'
 p(tt)
 
+# string concatenation
+# interpolation
+#
+# speed comparison: (<< ≥ concat) >> (+ ≈ interpolation) (>> means much greater than, like 10000x)
+# better use concat or << if there is concatenation in loop
 dd = "a is #{a}"
 p dd
 
@@ -40,19 +56,26 @@ p "length of ee is #{ee.length}"
 p "3rd char of ee is #{ee[2]}"
 p "4 chars from the 2nd char of ee is #{ee[1,4]}"
 
-# string concatenation
+# String#concat
+# Takes multiple params, and integers are treated as code point
+# faster than +
+p h = 'Hello'
+p hh = h.concat(' world', 33) # => Hello world!
+p h # => Hello # changes the object to which the params are concatenated
+
+# use + method
 jj = "aa" + "bb"
 p jj
 
 # replace substring
-jj[2] = "d"
+jj[2] = "d"                     # method: str[index]
 p jj
-jj[0,2]="cc"
+jj[0,2]="cc"                    # method: str[start, length]
 p jj
 
 # search string
 p jj.index("cd")
-p jj.index("e")
+p jj.index("e")                 # nil if not found, not -1
 
 # split string
 p jj.split("d") # => ["cc", "b"]
@@ -81,7 +104,7 @@ p [a, ee].class
 p true.class # either upper or lower case, no mixed case like True
 p FALSE.class
 p nil.class
-p NIL.class
+p NIL.class                     # warning: constant ::NIL is deprecated, use nil
 
 
 name = 'James'
@@ -111,12 +134,12 @@ $Operating_System = "WinNT" # global variables start with $
 @name = "James" # instance variables start with @
 @@gender = "male" # class variables start with @@ (static fields in Java)
 
-p defined? iAge
-p defined?(_temp)
-p defined? (File_Path)
-p defined?($Operating_System)
-p defined?(@name)
-p defined?(@@gender)
+p defined? iAge                 # local-variable
+p defined?(_temp)               # local-variable
+p defined? (File_Path)          # constant
+p defined?($Operating_System)   # global-variable
+p defined?(@name)               # instance-variable
+p defined?(@@gender)            # class-variable
 
 # Predefined Global Variables
 puts "current file name is #{$0}"
@@ -125,6 +148,7 @@ puts "current process ID is #{$$}"
 puts "exit status of last executed child process is #{$?}"
 
 # true and false
+# all are true except nil and false
 p nil ? true : false
 p false ? true : false
 p 0 ? true : false
@@ -173,10 +197,10 @@ mud = [name, age, rr, aa]
 p mud
 p mud.length
 p mud.reverse!
-p mud[-1] # prints value of #{name}
+p mud[-1] # prints value of #{name} (valid index range: -length, length - 1, eg. [-4, 3])
 p mud[0][1]
 p mud.index(32.4)
-p mud[1, 2] # sub array, similar to substring
+p mud[1, 2] # sub array, similar to substring Array#[start, length]
 
 # modify array
 p mud[2] = 32 # updates and returns the new element
@@ -186,19 +210,32 @@ p mud << "temp" # appends and returns the updated array
 p mud.push("TEMP") # same as append
 p mud.pop # removes and returns the last element
 
+# * - unary (or un-array )/splat
+# converts array into a list of separate values
+numbers = (0..9).to_a
+p numbers.pop(2) # => [8,9] removes the last 2 element, and return the 2 elements in an array
+p numbers.push *[8,9] # append 8 and 9 to the array
+p numbers.shift(3) # => [0,1,2] removes the first 3 element, and return the 3 elements in an array
+p numbers.unshift *(0..2).to_a # prepend (same as #prepend in Ruby2.5)
+p numbers.append(*(10..20).to_a) # >= Ruby 2.5 (same as #push)
+p numbers.prepend(-1) # >= Ruby 2.5 (same as #unshift)
+p numbers
+
+# Array#new(size=0, default=nil)
 aaa = Array.new(3) # creates an array of three nil elements [nil, nil, nil]
 bbb = Array.new(3, 4) # creates an array of three nil elements [4, 4, 4]
 p aaa
 p bbb
+p Array.new(bbb << 5)
 
 ddd = aaa + bbb + aa # join arrays
 p ddd
 
 p aa
-p aa - bbb # difference
-p aa & bbb # intersection
+p aa - bbb # difference, remove all elements of bbb from aaa
+p aa & bbb # intersection, keep common elements of aaa and bbb
 
-# union. note order matters
+# union. note order matters. duplicate elements are removed
 ccc = [3, 4, 5]
 p bbb | ccc # prints [4, 3, 5]
 p ccc | bbb # prints [3, 4, 5]
@@ -220,6 +257,8 @@ aa = [0, 1, 2]
 bb = [0, 1, 2.0]
 cc = [0, 1, "2"]
 
+p aa == bb # => true, because 2 == 2.0 is true
+p aa == cc # => false
 
 # hash table (dictionary)
 ht = {:james => 30, :russell => 6}
@@ -267,36 +306,36 @@ end
 ff
 ff("james", "russell")
 ff(2,4,6)
+ff(*'hello'.chars)
 
 
 module Clazz
-### class and object
-class Laptop
-  @@keyboard = "Standard"
-  
-  def initialize(brand)
-    @brand = brand
+  ### class and object
+  class Laptop
+    @@keyboard = "Standard"
+
+    def initialize(brand)
+      @brand = brand
+    end
+
+    def get_brand
+      @brand
+    end
+
+    def get_keyboard
+      @@keyboard
+    end
+
+    def desc(user)
+      "This is #{user}'s laptop."
+    end
   end
 
-  def get_brand
-    @brand
-  end
+  # create an object
+  dell = Laptop.new("Dell")
 
-  def get_keyboard
-    @@keyboard
-  end
-
-  def desc(user)
-    "This is #{user}'s laptop."
-  end
-
-end
-
-# create an object
-dell = Laptop.new("Dell")
-
-p dell.get_brand
-p dell.get_keyboard
-p dell.desc("James")
+  p dell.get_brand
+  p dell.get_keyboard
+  p dell.desc("James")
 
 end
