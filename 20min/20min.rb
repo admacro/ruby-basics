@@ -12,7 +12,7 @@ class Greeter
 
   def say_bye
     puts "Bye #{@names}! Come back soon!"
-  end 
+  end
 end
 
 g = Greeter.new # initialize without arguments
@@ -37,7 +37,7 @@ class Greeter
   # overrides say_hi
   def say_hi
     puts "Hi #{@names.capitalize}!"
-  end 
+  end
 end
 
 puts gg.respond_to?("names") # prints true
@@ -55,25 +55,24 @@ class MegaGreeter
   def initialize(names = "World")
     @names = names
   end
-  
+
   def say_hi
     if @names.nil? # check if @names is nil
       puts "..."
     elsif @names.respond_to?("each") # see if @names can be iterated (Duck Typing)
-      @names.each {
-        |name|
+      @names.each do |name|
         puts "Hello #{name}!!"
-      }
+      end
     else
       puts "Hello #{names}!!"
     end
   end
 
   def say_bye
-    if @names.nil? 
+    if @names.nil?
       puts "..."
     elsif @names.respond_to?("join") # can we join what's in @names together?
-        puts "Bye #{names.join(", ")}!! Come back soon!!"
+      puts "Bye #{names.join(", ")}!! Come back soon!!"
     else
       puts "Bye #{names}!! Come back soon!!"
     end
@@ -84,7 +83,7 @@ end
 # Only run the following code when this file is the main file being run
 # instead of having been required or loaded by another file
 
-puts "Executing code in 20min.rb"
+puts "Executing code in 20min.rb as the main file"
 puts "__FILE__ is #{__FILE__}"
 puts "$0 is #{$0}"
 
@@ -104,5 +103,14 @@ if __FILE__==$0
   mg.names = nil
   mg.say_hi
   mg.say_bye
-end 
+end
 
+# __FILE__
+#
+# The name of the file currently being executed, including path relative to the
+# directory where the application was started up (or the current directory, if
+# it has been changed). The current file is, in some cases, different from the
+# startup file for the running application, which is available in the global
+# variable $0.
+#
+# ref: https://ruby-doc.org/docs/keywords/1.9/Object.html#method-i-__FILE__

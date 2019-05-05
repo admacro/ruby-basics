@@ -9,7 +9,7 @@ puts %q{Me: "Hi! I'm #{name}."
 You: "Hi! Im Ruby."
 }
 
-# %Q is similar to double quote '...'
+# %Q is similar to double quote "..."
 # note the delimiter can be other characters ((), [], ||, ^^, //)
 puts %Q[Me: "Hi! I'm #{name}."
 You: "Hi! Im Ruby."
@@ -82,16 +82,15 @@ p ll # [1, 2, 3, 8, 8, 8, 8, 9]
 
 ## loop through array (list)
 ll.each_with_index { # opening curly bracket must be on this line, else syntax error.
-  |x, index|
+  |x, index| # block parameters start on a new line
   p "ll[#{index}] => #{x}"
 }
 
 ## hash table loop
 hh = {:james => 30, :russel => 6}
-hh.each {
-  |kk, vv| # key and value
+hh.each do |kk, vv| # key and value (you can also use do...end instead of {})
   p "#{kk} => #{vv}"
-}
+end
 
 
 ### Map function to array

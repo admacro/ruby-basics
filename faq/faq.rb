@@ -3,19 +3,60 @@
 
 # p e # undefined local variable or method `e' for main:Object (NameError)
 
+# ==
+#   - Same as equal? in Object class, which means it tests for equality of object references
+#   - Redefined in most subclasses of Object to compare content of distinct instances
+#     - For example, Integer, String, Array, and Hash each has different equality definition
+#
+# equal?
+#   - Compares object identity (object_id).
+#   - In other words, equal? tests whether two values refer to the same object
+#
+# eql?
+#   - eql? is synonymous with ==.
+#   - Subclasses normally continue this tradition by # aliasing eql? to their
+#     overridden == method, but there are exceptions. Numeric types, for
+#     example, perform type conversion across ==, but not across eql?
+
 i = 1234567
-ii = 1234567
+ii = 1234567.0
+p i == ii # => true
 p i.equal?(ii) # => true
+p i.eql?(ii) # => false
 
 f = 123.456
 ff = 123.456
 p f.equal?(ff) # => true
+p f == ff # => true
+p f.eql?(ff) # => true
 
 s = "string"
 ss = "string"
 p s == ss # => true
 p s.equal?(ss) # => false
+p s.eql?(ss) # => true
 
+# size must be equal, and all corresponding elements are equal according to ==
+a = [1,2]
+aa = [1,2.0]
+p a == aa # => true
+p a.equal?(aa) # => false
+p a.eql?(aa) # => false
+
+# when Hash objects are compared using ==
+# size must be equal
+# values are compared using ==
+# keys are compared using eql?(other)
+#   - eql? method returns true if obj and other refer to the same hash key.
+#   - This is used by Hash to test members for equality.
+#   - Ref: https://docs.ruby-lang.org/en/2.6.0/Object.html#method-i-eql-3F
+h = {a: 1, 2 => 2}
+hh = {a: 1, 2 => 2.0}
+hhh = {a: 1, 2.0 => 2}
+p h == hh # => true
+p h.equal?(hh) # => false
+p h.eql?(hh) # => false
+p h == hhh # => false, because keys are compared using eql? and 2.eql?(2.0) is false
 
 # Variable scope
 v = 1 # top level
@@ -42,7 +83,7 @@ threads = []
       puts "#{l_name}: #{a}"
     end 
   end
-end 
+end
 
 threads.each {|t| t.join}
 
