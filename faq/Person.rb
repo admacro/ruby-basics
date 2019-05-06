@@ -8,23 +8,48 @@ class Person
     @name = name
     @age = age.to_i
   end
+end
 
+person = Person.new("James", 32)
+
+# The print method p is a kernel method.
+# Kernel.p(obj) writes obj.inpect which by default shows
+#   #<ClassName:Encoding_of_the_Object_ID @instance_variable_1=value_1 ...>
+#   in which value_1, value_2, etc are obtained by calling #inspect on each of the
+#   instance variables.
+p person # => #<Person:0x00007f8a959c9d30 @name="James", @age=32>
+
+class Person
+  # overriding Object#inspect
   def inspect
+    # here #{name} calls name.to_s, not name.inspect
     "#{name} (#{age})"
   end
 end
 
-p = Person.new("James", 32)
-p p # => James (32)
-puts p # => #<Person:0x0000060029fa80>
-print p # => #<Person:0x0000060029fa80>
-print "\n"
+p person # => #<Person:0x00007f8a959c9d30>[James (32)]
+
+# Kernel.puts(obj) writes obj.to_s
+puts person # => #<Person:0x0000060029fa80>
+
+class Person
+  # overriding Object#to_s
+  def to_s
+    # here #{name} calls name.to_s, not name.inspect
+    "#{name} is #{age} years old."
+  end
+end
+
+# Kernel.print(obj) writes obj.to_s
+print "#{person}\n" # => James is 32 years old.
 
 
 # read data from person.txt and populate them
 people = Array.new
 
 File.foreach("persons.txt") do |line|
+  # =~ tests regex
+  # $1 and $2 are back references of the regexen
   people << Person.new($1, $2) if line =~ /(.*):\s+(\d+)/
 end
 
@@ -56,5 +81,3 @@ if a = b then return 0 end
 if a > b then return 1 end
 if a and b are not camparable then return nil end
 =end
-
-
