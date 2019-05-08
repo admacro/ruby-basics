@@ -12,7 +12,11 @@ def combine(*iterators)
 
   iterators.each do |it|
     queue = SizedQueue.new(1)
-    th = Thread.new(it, queue) do |i, q|
+
+    # Thread.new(*args) {}
+    # Any args given to ::new will be passed to the block.
+    # A ThreadError exception is raised if ::new is called without a block.
+    th = Thread.new(it, queue) do |i, q| # i is iter, q is queue
       # send(:symbol [, args...])
       # Invokes the method identified by symbol, passing it any arguments specified.
       # i is method it1 and it2

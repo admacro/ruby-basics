@@ -68,9 +68,8 @@ p l.emphasize # => "*i love ruby*"
 
 
 # operator overloading
-# supported operators (they are actuallf methods): + - * / < > <=> (needs verification)
+# supported operators (they are actually methods): + - * / < > <=> etc.
 # unsupported operators: =, .., ..., not, ||, &&, and, or, ::
-
 class Virus < String # Virus extends String
   def +(v) 
     "#{self}-#{v}"
@@ -87,7 +86,7 @@ p v3 # => "v3-v2"
 
 # No ++ and --, use += and -=
 x = 1
-x++ # no effect and Ruby doesn't rase an error
+x++ # no effect and Ruby doesn't raise an error
 x += 2
 p x
 x -= 1
@@ -96,7 +95,9 @@ p x
 def hi
   p "hi"
 end
-p method(:hi).owner # => method hi belongs to Object class
+p method(:hi).owner # => Object (method hi belongs to Object class)
+p method(:method).owner # => Kernel (the method itself belongs to Kernel)
+p self # => main
 p self.class # => Object
 self.send("hi") # self is main of Object class
 
@@ -107,12 +108,17 @@ module M
   class C
     p self # => M::C
 
+    def C.cf
+      p self
+    end
+
     def f
       p self
     end
   end
-  
-  C.new.f # => #<M::C:0x007fc13a077800>
+
+  C.cf # => M::C
+  C.new.f # => #<M::C:0x007fc13a077800> (0x007fc13a077800 is an encoded string of the object_id of an instance of ::M::C)
 end
 
 
@@ -154,6 +160,16 @@ end
 Test.new.test
 Test.new.tt
 
+# private methods
+#   - means "private to this instance" in Ruby (whereas private means "private to this class" in C++/Java)
+#   - in other words, private methods are local to the instantiated objects to which they belong
+#   - similar to what “protected” is in Java
+#   - accessible from children
+#   
+# protected methods
+#   - callable only where self of the context is the same as the method. (method definition or instance_eval).
+#     - may be called by any instance of the defining class or its subclasses
+#     - accessible from objects of the same class (or children)
 class Test
   private :test # make test private
   protected :tt # make tt protected
@@ -231,3 +247,12 @@ p a # => 1
 p b # => "2"
 p c # => 3.14
 
+d,e = m1 # missed out retuned values are discarded
+p d # => 1
+p e # => "2"
+
+f,g,h,i = m1 # redundant variables are left as nil
+p f # => 1
+p g # => "2"
+p h # => 3.14
+p i # => nil
