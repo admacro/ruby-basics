@@ -31,11 +31,11 @@ Clazz.version # => "Clazz V 2.0"
 # class variable and instance variable
 class Vars
   # class variables belong to class object (Vars), which is an instance of class Class
-  @@class_var = "@@class_var"
-  @class_var = "@class_var"
+  @@class_var = "@@class_var" # belongs to Vars (an instance of Class) and instances of Vars
+  @class_var = "@class_var" # only belongs to Vars (an instance of Class)
 
   def initialize(inst_var)
-    @inst_var = inst_var # instace variable initialized while new instance is created
+    @inst_var = inst_var # instance variables that are initialized when new instance is created
   end
 
   def temp
@@ -85,9 +85,9 @@ class << p
     p "hello"
   end
 end
-p.welcome
+p.welcome # => "hello"
 
-# optional two (clearer and simpler)
+# optional two (clearer and simpler, but is prone to be overlooked)
 def p.welcome
   p "Bonjour"
 end
@@ -106,6 +106,8 @@ module Formatter
   end
 end
 
+# use :: to access anything of module
+Formatter::PATTERN
 Formatter::format
 Formatter::format_pretty
 
@@ -132,7 +134,13 @@ class Animal
     @name, @legs = name, legs
   end
 
-  def <=>(other) # this is used by Comparable to provide its functionalities
+  # Must be defined to use <, <=, ==, >=, >, and between?
+  # It is used by Comparable to provide its functionalities
+  # <=> is used in <, <=, ==, >=, >, and between? in Comparable
+  # In the following examples, "comparing" will be printed when
+  # comparing using <, <=, ==, >=, >, or between?
+  def <=>(other)
+    p 'comparing'
     legs <=> other.legs
   end
 
@@ -145,11 +153,11 @@ c = Animal.new("cat", 4)
 s = Animal.new("snake", 0)
 p = Animal.new("parrot", 2)
 
-p c < s # => false
-p s < c # => false
-p p >= s # => false
-p p.between?(s, c) # => false
-p ([c, s, p].sort) # => [snake, parrot, cat] (parentheses are required as p is ambiguous)
+p c < s # => false and "comparing"
+p s < c # => false and "comparing"
+p p >= s # => false and "comparing"
+p p.between?(s, c) # => false and twice of "comparing"
+p ([c, s, p].sort) # => [snake, parrot, cat] (parentheses are required as p is ambiguous) and 3 times of "comparing"
 
 
 # alternate class method definition
@@ -161,7 +169,7 @@ class CC
 end
 
 def CC.mmm
-  CC::CT # must use Class::CONST notation
+  CC::CT # must use Class::CONST notation, otherwise NameError: uninitialized constant CT
 end
 
 p CC.mm # => 1
@@ -181,7 +189,13 @@ module Formatter
 end
 c = CC.new
 c.extend Formatter
-p c.format_simple # only instance methods are added to this particular object (here the object is an instance of CC class)
+
+# Only instance methods are added to this particular object
+# Here the object is an instance of CC class
+p c.format_simple # => simple
+
+# And instance methods are added to the object as singleton methods
+p c.singleton_methods # => [format_simple]
 
 # won't work since this is another object
 # p CC.new.format_simple # undefined method `format_simple' for #<CC:0x000006002886c8> (NoMethodError)
@@ -189,8 +203,12 @@ p c.format_simple # only instance methods are added to this particular object (h
 # won't work for module methods 
 # p c.format # private method `format' called for #<CC:0x00000600288880> (NoMethodError)
 
+# Instance methods are now added to Person (an instance of class Class) as
+# singleton methods (also called Class methods)
 Person.extend Formatter
-p Person.format_simple # only instance methods are added to the object (here the object is an instance of Class class)
+p Person.format_simple 
+p Person::format_simple # same as above
+p Person.singleton_methods # => [format_simple]
 
 # won't work for instances
 # p Person.new.format_simple # undefined method `format_simple' for #<Person:0x000006002884e8> (NoMethodError)
