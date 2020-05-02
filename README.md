@@ -24,9 +24,11 @@ This repository was originally setup for learning basics of Ruby programming lan
   - [Asset Pipeline][asset]
 
 ### Doing it now ...
-- Ruby on Rails Guides
-  - [Caching with Rails][caching]
-  - [Testing Rails Applications][testing]
+Nothing at the moment. 
+
+I swiched from Java to Ruby and Rails and worked with Ruby and Rails from Mar 2018 to May 2019.
+
+I'm now fully immersed in [Go](https://www.golang.org/).
   
 ### Roads Ahead
 - Ruby on Rails Guides
