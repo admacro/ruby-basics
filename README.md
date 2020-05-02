@@ -27,7 +27,6 @@ This repository was originally setup for learning basics of Ruby programming lan
 Nothing at the moment. 
 
 I swiched from Java to Ruby and Rails and worked with Ruby and Rails from Mar 2018 to May 2019.
-
 I'm now fully immersed in [Go](https://www.golang.org/).
   
 ### Roads Ahead
