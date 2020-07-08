@@ -1,3 +1,5 @@
+___Update___
+I swiched from Java to Ruby and Rails and worked with Ruby and Rails from Mar 2018 to May 2019.
 
 # ruby-basics
 
@@ -25,9 +27,6 @@ This repository was originally setup for learning basics of Ruby programming lan
 
 ### Doing it now ...
 Nothing at the moment. 
-
-I swiched from Java to Ruby and Rails and worked with Ruby and Rails from Mar 2018 to May 2019.
-I'm now fully immersed in [Go](https://www.golang.org/).
   
 ### Roads Ahead
 - Ruby on Rails Guides
